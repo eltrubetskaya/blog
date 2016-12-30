@@ -1,0 +1,3 @@
+veta_homework_homepage:
+    path:     /
+    defaults: { _controller: VetaHomeworkBundle:Default:index }

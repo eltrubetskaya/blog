@@ -1,3 +1,7 @@
+veta_homework:
+    resource: "@VetaHomeworkBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
