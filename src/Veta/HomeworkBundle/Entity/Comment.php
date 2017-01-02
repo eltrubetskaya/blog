@@ -143,4 +143,12 @@ class Comment
     {
         return $this->post;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getText();
+    }
 }

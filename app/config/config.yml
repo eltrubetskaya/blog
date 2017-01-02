@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -38,6 +38,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'SonataFormatterBundle:Form:formatter.html.twig'
+        - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -76,3 +79,83 @@ stof_doctrine_extensions:
             sluggable: true
             timestampable: true
             tree: true
+
+sonata_formatter:
+    formatters:
+        markdown:
+            service: sonata.formatter.text.markdown
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig #keep this commented unless you are using media bundle.
+
+
+        text:
+            service: sonata.formatter.text.text
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        rawhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        richhtml:
+            service: sonata.formatter.text.raw
+            extensions:
+                - sonata.formatter.twig.control_flow
+                - sonata.formatter.twig.gist
+        #        - sonata.media.formatter.twig
+
+
+        twig:
+            service: sonata.formatter.text.twigengine
+            extensions: [] # Twig formatter cannot have extensions
+
+    ckeditor:
+        templates:
+            browser: 'SonataFormatterBundle:Ckeditor:browser.html.twig'
+            upload: 'SonataFormatterBundle:Ckeditor:upload.html.twig'
+
+
+
+sonata_admin:
+    title:      Admin Panel
+    title_logo: /bundles/sonataadmin/logo_title.png
+    templates:
+        dashboard: SonataAdminBundle:Core:dashboard.html.twig
+        layout: SonataAdminBundle::layout.html.twig
+        search: SonataAdminBundle:Core:search.html.twig
+        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
+    dashboard:
+        blocks:
+            - { position: left, type: sonata.admin.block.admin_list, class: "col-lg-4" }
+
+            - { position: right, type: sonata.block.service.text, class: "col-lg-8", settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p>"} }
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.search_result:
+            contexts: [admin]
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.block.service.text: ~
+        sonata.formatter.block.formatter: ~
+
+
+ivory_ck_editor:
+    default_config: default
+    configs:
+        default:
+            # default toolbar plus Format button
+            toolbar:
+            - [Bold, Italic, Underline, -, Cut, Copy, Paste, PasteText, PasteFromWord, -, Undo, Redo, -, NumberedList, BulletedList, -, Outdent, Indent, -, Blockquote, -, Image, Link, Unlink, Table]
+            - [Format, Maximize, Source]

@@ -1,4 +1,34 @@
 services:
-#    veta_homework.example:
-#        class: Veta\HomeworkBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    veta_homework.admin.post_admin:
+          class: Veta\HomeworkBundle\Admin\PostAdmin
+          arguments: [~,Veta\HomeworkBundle\Entity\Post, ~]
+          tags:
+              - { name: sonata.admin, manager_type: orm, group: "Content", label: "Post", icon: "<i class=\"fa fa-th\" aria-hidden=\"true\"></i>" }
+
+    veta_homework.admin.category_admin:
+        class: Veta\HomeworkBundle\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Classification", label: "Category", icon: "<i class=\"fa fa-tags\" aria-hidden=\"true\"></i>" }
+        arguments:
+            - ~
+            - Veta\HomeworkBundle\Entity\Category
+            - 'SonataAdminBundle:CRUD'
+
+    veta_homework.admin.tag_admin:
+        class: Veta\HomeworkBundle\Admin\TagAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Classification", label: "Tag", icon: "<i class=\"fa fa-tags\" aria-hidden=\"true\"></i>" }
+        arguments:
+            - ~
+            - Veta\HomeworkBundle\Entity\Tag
+            - 'SonataAdminBundle:CRUD'
+
+    veta_homework.admin.comment_admin:
+        class: Veta\HomeworkBundle\Admin\CommentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Comment", icon: "<i class=\"fa fa-th\" aria-hidden=\"true\"></i>" }
+        arguments:
+            - ~
+            - Veta\HomeworkBundle\Entity\Comment
+            - 'SonataAdminBundle:CRUD'
