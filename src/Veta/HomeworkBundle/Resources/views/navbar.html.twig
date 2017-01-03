@@ -1,0 +1,15 @@
+<nav class="navbar navbar-inverse navbar-static" id="navbar-example">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="collapsed navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-example-js-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button> <a class="navbar-brand" href="{{ path('veta_homework_homepage') }}">Blog</a>
+        </div>
+        <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
+            {{ knp_menu_render('main', { 'style': 'navbar' }) }}
+        </div>
+    </div>
+</nav>

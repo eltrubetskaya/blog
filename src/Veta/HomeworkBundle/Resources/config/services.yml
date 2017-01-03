@@ -39,3 +39,10 @@ services:
             - 'SonataAdminBundle:CRUD'
         calls:
             - [ setTranslationDomain, [Veta\Homeworkb\Bundle]]
+
+    veta_homework.menu.menu_builder:
+        class: Veta\HomeworkBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
+            - { name: knp_menu.menu_builder, method: createSidebarMenu, alias: sidebar }

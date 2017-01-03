@@ -16,3 +16,7 @@ _in this project used:_
 
   * **SonataAdminBundle**
   * **StofDoctrineExtensionsBundle (Sluggable Timestampable Tree)**
+  * **BreadcrumbsBundle**
+  * **KnpMenuBundle**
+  * **BraincraftedBootstrapBundle**
+  

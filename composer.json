@@ -28,7 +28,11 @@
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
         "sonata-project/formatter-bundle": "^3.1",
         "sonata-project/block-bundle": "^3.2",
-        "redcode/tree-bundle": "dev-master"
+        "redcode/tree-bundle": "dev-master",
+        "whiteoctober/breadcrumbs-bundle": "^1.2",
+        "braincrafted/bootstrap-bundle": "^2.2",
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "bower-asset/bootstrap": "^3.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

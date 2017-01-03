@@ -1,6 +1,6 @@
 veta_homework_homepage:
     path:     /
-    defaults: { _controller: VetaHomeworkBundle:Default:index }
+    defaults: { _controller: VetaHomeworkBundle:Site:index }
 
 veta_homework_admin:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
@@ -14,3 +14,15 @@ veta_homework_sonata_admin:
 veta_homework_redcode_tree:
     resource: "@RedCodeTreeBundle/Resources/config/routing.yml"
     prefix:   /admin
+
+veta_homework_post_index:
+    path:     /post
+    defaults: { _controller: VetaHomeworkBundle:Post:index }
+
+veta_homework_comment_index:
+    path:     /comment
+    defaults: { _controller: VetaHomeworkBundle:Comment:index }
+
+veta_homework_category_index:
+    path:     /category
+    defaults: { _controller: VetaHomeworkBundle:Category:index }

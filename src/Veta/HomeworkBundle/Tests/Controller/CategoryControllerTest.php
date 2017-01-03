@@ -4,14 +4,12 @@ namespace Veta\HomeworkBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class CategoryControllerTest extends WebTestCase
 {
     public function testIndex()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
-
-        $this->assertContains('Hello World', $client->getResponse()->getContent());
+        $crawler = $client->request('GET', '/index');
     }
 }
