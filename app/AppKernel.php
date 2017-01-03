@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Sonata\FormatterBundle\SonataFormatterBundle(),
+            new RedCode\TreeBundle\RedCodeTreeBundle(),
             new Veta\HomeworkBundle\VetaHomeworkBundle(),
         ];
 

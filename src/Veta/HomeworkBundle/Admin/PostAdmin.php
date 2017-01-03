@@ -6,12 +6,16 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Veta\HomeworkBundle\Entity\Post;
 
 class PostAdmin extends AbstractAdmin
 {
     protected $searchResultActions = ['edit', 'show'];
 
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -25,7 +29,7 @@ class PostAdmin extends AbstractAdmin
                 ])
                 ->add('text', 'sonata_simple_formatter_type', [
                     'format' => 'richhtml',
-                    'ckeditor_context' => 'default', // optional
+                    'ckeditor_context' => 'default',
                 ])
             ->end()
             ->with('Status', ['class'=>'col-lg-4'])
@@ -44,7 +48,7 @@ class PostAdmin extends AbstractAdmin
                      ])
                     ->add('category', 'sonata_type_model_list', [
                         'btn_add'       => 'Add Category',
-                        'btn_list'      => 'List',     //which will be translated
+                        'btn_list'      => 'List',
                         'btn_delete'    => false,
                     ])
             ->end()
@@ -52,8 +56,6 @@ class PostAdmin extends AbstractAdmin
             ->tab('Comments')
                 ->with('')
                     ->add('comments', 'sonata_type_collection', [
-
-                        // Prevents the "Delete" option from being displayed
                         'by_reference' => false,
                         'type_options' => ['delete' => true]
                     ], [
@@ -66,6 +68,9 @@ class PostAdmin extends AbstractAdmin
         ;
     }
 
+    /**
+     * @param DatagridMapper $datagridMapper
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -76,16 +81,37 @@ class PostAdmin extends AbstractAdmin
         ;
     }
 
+    /**
+     * @param ListMapper $listMapper
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('description')
+            ->add('dateCreate')
+            ->add('category')
+            ->add('status')
+            ->add('_action', 'actions', [
+            'actions' => [
+                'show' => [],
+                'edit' => [],
+            ]
+            ])
+        ;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('title')
             ->add('text')
             ->add('dateCreate')
-            ->add('status')
             ->add('tags')
             ->add('category')
+
         ;
     }
 

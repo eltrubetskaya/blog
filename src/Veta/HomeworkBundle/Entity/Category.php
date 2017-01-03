@@ -13,7 +13,11 @@ use Veta\HomeworkBundle\Entity\Post;
 /**
  * Category
  *
- * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\CategoryRepository")
+ * @Gedmo\Tree(type="nested")
+ *
+ * use repository for handy tree functions
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ *
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
  */
@@ -66,6 +70,44 @@ class Category
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category", cascade={"persist","merge"})
      */
     private $posts;
+
+    /**
+     * @Gedmo\TreeLeft
+     * @ORM\Column(type="integer")
+     */
+    private $lft;
+
+    /**
+     * @Gedmo\TreeLevel
+     * @ORM\Column(type="integer")
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(type="integer")
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $root;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    private $children;
 
     /**
      * Constructor
@@ -176,6 +218,30 @@ class Category
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * @param Category|null $parent
+     */
+    public function setParent(Category $parent = null)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**

@@ -13,7 +13,10 @@ services:
         arguments:
             - ~
             - Veta\HomeworkBundle\Entity\Category
-            - 'SonataAdminBundle:CRUD'
+            - VetaHomeworkBundle:CategoryAdmin
+            - 'title'
+        calls:
+            - [ setTranslationDomain, [Veta\Homeworkb\Bundle]]
 
     veta_homework.admin.tag_admin:
         class: Veta\HomeworkBundle\Admin\TagAdmin
@@ -23,6 +26,8 @@ services:
             - ~
             - Veta\HomeworkBundle\Entity\Tag
             - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setTranslationDomain, [Veta\Homeworkb\Bundle]]
 
     veta_homework.admin.comment_admin:
         class: Veta\HomeworkBundle\Admin\CommentAdmin
@@ -32,3 +37,5 @@ services:
             - ~
             - Veta\HomeworkBundle\Entity\Comment
             - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setTranslationDomain, [Veta\Homeworkb\Bundle]]
