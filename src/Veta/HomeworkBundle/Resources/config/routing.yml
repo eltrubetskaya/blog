@@ -24,5 +24,8 @@ veta_homework_comment_index:
     defaults: { _controller: VetaHomeworkBundle:Comment:index }
 
 veta_homework_category_index:
-    path:     /category
+    path:     /category/{slug}
     defaults: { _controller: VetaHomeworkBundle:Category:index }
+    methods: [GET]
+    requirements:
+        slug: '[\w\-]+'

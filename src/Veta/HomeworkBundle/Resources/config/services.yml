@@ -42,7 +42,7 @@ services:
 
     veta_homework.menu.menu_builder:
         class: Veta\HomeworkBundle\Menu\MenuBuilder
-        arguments: ["@knp_menu.factory"]
+        arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }
             - { name: knp_menu.menu_builder, method: createSidebarMenu, alias: sidebar }

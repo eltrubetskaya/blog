@@ -16,7 +16,7 @@ use Veta\HomeworkBundle\Entity\Post;
  * @Gedmo\Tree(type="nested")
  *
  * use repository for handy tree functions
- * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\CategoryRepository")
  *
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
