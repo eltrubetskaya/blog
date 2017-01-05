@@ -25,6 +25,9 @@ class CategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository('VetaHomeworkBundle:Category')->findOneBy(['slug' => $slug]);
 
+        $repo = $em->getRepository('VetaHomeworkBundle:Category');
+        $categories = $repo->getNodesHierarchy();
+
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addRouteItem("Home", "veta_homework_homepage");
 
@@ -40,6 +43,17 @@ class CategoryController extends Controller
 
         $breadcrumbs->addRouteItem($category->getTitle(), "veta_homework_category_index", ['slug' => $slug]);
 
-        return $this->render('VetaHomeworkBundle:Category:index.html.twig');
+        $all_posts = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
+        $query = $category->getPosts();
+        $paginator  = $this->get('knp_paginator');
+        $posts = $paginator->paginate($query, $request->query->getInt('page', 1), 1);
+
+
+        return $this->render('VetaHomeworkBundle:Category:index.html.twig', [
+            'categories' => $categories,
+            'all_posts' => $all_posts,
+            'posts' => $posts,
+
+        ]);
     }
 }

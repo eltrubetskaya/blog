@@ -4,8 +4,20 @@
 
 {% block body %}
     <div class="container">
-        {% block header %}{% endblock %}
+        {% block header %}
+            <div class="row">
+                {% include 'VetaHomeworkBundle::navbar.html.twig' %}
+                {{ wo_render_breadcrumbs() }}
+            </div>
+        {% endblock %}
         {% block main %}{% endblock %}
-        {% block footer %}{% endblock %}
     </div>
+    {% block footer %}
+        <div class="blog-footer">
+            <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            <p>
+                <a href="#">Back to top</a>
+            </p>
+        </div>
+    {% endblock %}
 {% endblock %}

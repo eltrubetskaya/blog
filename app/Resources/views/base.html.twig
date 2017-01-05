@@ -20,9 +20,9 @@
     {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 </head>
 <body>
-    <div class="container">
-        {% block body %}{% endblock %}
-    </div>
+
+    {% block body %}{% endblock %}
+
     {% block javascripts %}{% endblock %}
 
     <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>

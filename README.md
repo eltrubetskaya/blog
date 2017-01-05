@@ -19,4 +19,5 @@ _in this project used:_
   * **BreadcrumbsBundle**
   * **KnpMenuBundle**
   * **BraincraftedBootstrapBundle**
+  * **KnpPaginatorBundle**
   

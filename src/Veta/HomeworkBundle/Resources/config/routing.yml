@@ -18,6 +18,14 @@ veta_homework_redcode_tree:
 veta_homework_post_index:
     path:     /post
     defaults: { _controller: VetaHomeworkBundle:Post:index }
+    methods: [GET]
+
+veta_homework_post_view:
+    path:     /post/{slug}
+    defaults: { _controller: VetaHomeworkBundle:Post:view }
+    methods: [GET]
+    requirements:
+        slug: '[\w\-]+'
 
 veta_homework_comment_index:
     path:     /comment

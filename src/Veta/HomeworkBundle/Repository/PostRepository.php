@@ -3,6 +3,8 @@
 namespace Veta\HomeworkBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * PostRepository
@@ -13,16 +15,35 @@ use Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository
 {
     /**
-     * @return mixed
+     * @param int $limit
+     * @return QueryBuilder
      */
-    public function findMostRecent()
+    public function findMostRecentQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
             ->orderBy('u.dateCreate', 'DESC')
+            ->setMaxResults($limit)
 
         ;
-        $query = $qb->getQuery();
 
-        return $query->execute();
+        return $qb;
+    }
+
+    /**
+     * @param int $limit
+     * @return Query
+     */
+    public function findMostRecentQuery($limit = 100)
+    {
+        return $this->findMostRecentQueryBuilder($limit)->getQuery();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function findMostRecent($limit = 100)
+    {
+        return $this->findMostRecentQuery($limit)->getResult();
     }
 }
