@@ -4,10 +4,11 @@ namespace Veta\HomeworkBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Veta\HomeworkBundle\Entity\Comment;
+use Veta\HomeworkBundle\Form\Type\CommentType;
 
 class PostController extends Controller
 {
@@ -63,7 +64,18 @@ class PostController extends Controller
 
         $all_posts = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
 
+        $comment = new Comment();
+        $comment->setPost($post);
+        $comment->setDateCreate(new \DateTime());
+
+        $form = $this->createForm(CommentType::class, $comment, [
+            'action' => $this->generateUrl('veta_homework_comment_create'),
+            'method' => 'POST',
+        ])
+        ;
+
         return $this->render('VetaHomeworkBundle:Post:view.html.twig', [
+            'form' => $form->createView(),
             'post' => $post,
             'all_posts' => $all_posts,
 

@@ -27,9 +27,10 @@ veta_homework_post_view:
     requirements:
         slug: '[\w\-]+'
 
-veta_homework_comment_index:
+veta_homework_comment_create:
     path:     /comment
-    defaults: { _controller: VetaHomeworkBundle:Comment:index }
+    defaults: { _controller: VetaHomeworkBundle:Comment:create }
+    methods: [POST]
 
 veta_homework_category_index:
     path:     /category/{slug}

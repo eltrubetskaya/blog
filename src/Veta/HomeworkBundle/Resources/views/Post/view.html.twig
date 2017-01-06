@@ -15,6 +15,40 @@
                 </p>
                 {{ post.text|raw }}
             </div>
+            <h3>Comments</h3>
+            <hr>
+            {{ form_start(form) }}
+            <div class="form-group">
+                <strong>New Comment</strong>
+                <span class="glyphicon glyphicon-edit pull-right" aria-hidden="true"></span>
+            </div>
+            {{ form_widget(form) }}
+            <div class="form-group">
+                <div class="pull-right ">
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus pull-left" aria-hidden="true"></span> Add</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <hr style="margin-top: 80px">
+            {% block message_block %}
+                {% for flash_message in app.session.flashBag.get('info') %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ "%that%: %this%"|replace({'%that%': "Message", '%this%': flash_message}) }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+            {% for comment in post.comments %}
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="{{ asset('src/img/noavatar92.7b2fde640943965cc88df0cdee365907.png') }}"  style="width: 64px; height: 64px;">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading"><small>{{ comment.dateCreate|date('Y-m-d H:m:s') }}</small></h4>
+                        {{ comment.text|raw }}
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
         </div>
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
             {% include 'VetaHomeworkBundle::sidebar.html.twig' %}
