@@ -38,3 +38,10 @@ veta_homework_category_index:
     methods: [GET]
     requirements:
         slug: '[\w\-]+'
+
+veta_homework_tag_index:
+    path:     /tag/{slug}
+    defaults: { _controller: VetaHomeworkBundle:Tag:index }
+    methods: [GET]
+    requirements:
+        slug: '[\w\-]+'

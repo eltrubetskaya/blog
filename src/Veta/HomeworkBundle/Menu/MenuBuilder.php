@@ -11,18 +11,19 @@ class MenuBuilder
 {
     private $factory;
     private $em;
-    private $menuName;
-    private $menu;
+    private $current;
 
     /**
      * MenuBuilder constructor.
      * @param FactoryInterface $factory
      * @param EntityManager $em
+     * @param bool $current
      */
-    public function __construct(FactoryInterface $factory, EntityManager $em)
+    public function __construct(FactoryInterface $factory, EntityManager $em, $current = false)
     {
         $this->factory = $factory;
         $this->em = $em;
+        $this->current = $current;
     }
 
     /**
@@ -38,18 +39,27 @@ class MenuBuilder
         $menu->addChild('Home', ['route' => 'veta_homework_homepage']);
 
         foreach ($nodes as $node) {
-            $menu->addChild($node->getTitle(), [
-                'route' => 'veta_homework_category_index',
-                'routeParameters' => ['slug' => $node->getSlug()],
-                'extras' => [
-                    'routes' => [
-
+            $nodesChildren =  $category->getChildren($node, false);
+            $menu
+                ->addChild($node->getTitle(), [
+                    'route' => 'veta_homework_category_index',
+                    'routeParameters' => ['slug' => $node->getSlug()],
+                    'extras' => [
+                        'routes' => [
+                            [
+                                'route' => 'veta_homework_category_index',
+                                'routeParameters' => ['slug' => $this->isChild($nodesChildren, $options['slug'])],
+                            ],
+                            [
+                                'route' => 'veta_homework_post_view',
+                                'routeParameters' => ['slug' => $this->isCategoryPost($nodesChildren, $options['slug'])],
+                            ],
+                        ],
                     ],
-                ],
-            ])
+                ])
             ;
+            $menu[$node->getTitle()]->setCurrent($this->current);
         }
-
         return $menu;
     }
 
@@ -89,5 +99,43 @@ class MenuBuilder
             }
         }
         return $menu;
+    }
+
+    /**
+     * @param $nodesChildren
+     * @param $slug
+     * @return mixed
+     */
+    public function isCategoryPost($nodesChildren, $slug)
+    {
+        $post = $this->em->getRepository('VetaHomeworkBundle:Post')->findOneBy(['slug' => $slug]);
+        foreach ($nodesChildren as $nodeChildren) {
+            if ($post) {
+                $category = $post->getCategory();
+                if (($nodeChildren->getSlug() == $category->getSlug()) || ($nodeChildren->getParent()->getSlug() == $category->getSlug())) {
+                    $this->current = true;
+                    return $slug;
+                } else {
+                    $this->current = false;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $nodesChildren
+     * @param $slug
+     * @return mixed
+     */
+    public function isChild($nodesChildren, $slug)
+    {
+        foreach ($nodesChildren as $nodeChildren) {
+            if (($nodeChildren->getSlug() == $slug) || ($nodeChildren->getParent()->getSlug() == $slug)) {
+                $this->current = true;
+                return $slug;
+            } else {
+                $this->current = false;
+            }
+        }
     }
 }

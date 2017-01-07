@@ -1,14 +1,10 @@
 {% extends "VetaHomeworkBundle::layout.html.twig" %}
 
-{% block title %}VetaHomeworkBundle:Site{% endblock %}
+{% block title %}VetaHomeworkBundle:Category{% endblock %}
 
 {% block main %}
     <div class="row">
         <div class="col-sm-8 blog-main">
-            <div class="blog-header">
-                <h1 class="blog-title">The Blog</h1>
-                <p class="lead blog-description">The homework template of creating a blog.</p>
-            </div>
             <hr>
             {% for post in posts %}
                 <div class="blog-post">
@@ -23,7 +19,10 @@
                     </p>
                     {{ post.description|raw }}
                 </div>
+
             {% endfor %}
+            <hr>
+            {{ knp_pagination_render(posts, "", {}, { "style": "pager", "prev_label": "&larr; Older", "next_label": "Newer &rarr;" }) }}
         </div>
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
             {% include 'VetaHomeworkBundle::sidebar.html.twig' %}
@@ -36,6 +35,6 @@
                 </ol>
             </div>
         </div><!-- /.blog-sidebar -->
+    </div>
 
-    </div><!-- /.row -->
 {% endblock %}
