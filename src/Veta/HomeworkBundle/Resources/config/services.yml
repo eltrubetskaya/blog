@@ -12,8 +12,8 @@ services:
             - { name: sonata.admin, manager_type: orm, group: "Classification", label: "Category", icon: "<i class=\"fa fa-tags\" aria-hidden=\"true\"></i>" }
         arguments:
             - ~
-            - Veta\HomeworkBundle\Entity\Category
-            - VetaHomeworkBundle:CategoryAdmin
+            - 'Veta\HomeworkBundle\Entity\Category'
+            - 'VetaHomeworkBundle:CategoryAdmin'
             - 'title'
         calls:
             - [ setTranslationDomain, [Veta\Homeworkb\Bundle]]

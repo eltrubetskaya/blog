@@ -28,11 +28,28 @@ class PostController extends Controller
         $breadcrumbs->addRouteItem("Post", "veta_homework_post_index");
 
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecentQuery();
+
+        if((($request->query->get('sort_date') == null) && ($request->query->get('sort_title') == null)) || ($request->query->get('sort_date') == 'new')){
+            $query = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecentQuery();
+        } else {
+            if($request->query->get('sort_date') == 'old') {
+                $query = $em->getRepository('VetaHomeworkBundle:Post')->findMostOldQuery();
+            } else {
+                if($request->query->get('sort_title') == 'up') {
+                    $query = $em->getRepository('VetaHomeworkBundle:Post')->findOrderByTitleUp();
+                } else {
+                    $query = $em->getRepository('VetaHomeworkBundle:Post')->findOrderByTitleDown();
+                }
+            }
+        }
 
         $paginator  = $this->get('knp_paginator');
-        $posts = $paginator->paginate($query, $request->query->getInt('page', 1), 4);
-
+        if($request->query->get('count') != null){
+            $count = $request->query->get('count');
+        } else {
+            $count = 5;
+        }
+        $posts = $paginator->paginate($query, $request->query->getInt('page', 1), $count);
         return $this->render('VetaHomeworkBundle:Post:index.html.twig', [
             'posts' => $posts,
 

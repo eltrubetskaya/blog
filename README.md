@@ -15,6 +15,8 @@ GeekHub HomeWork - Blog (Symfony)
 _in this project used:_
 
   * **SonataAdminBundle**
+  * **SonataFormatterBundle**
+  * **RedCodeTreeBundle**
   * **StofDoctrineExtensionsBundle (Sluggable Timestampable Tree)**
   * **BreadcrumbsBundle**
   * **KnpMenuBundle**

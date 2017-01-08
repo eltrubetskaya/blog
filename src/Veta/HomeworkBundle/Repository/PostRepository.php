@@ -46,4 +46,103 @@ class PostRepository extends EntityRepository
     {
         return $this->findMostRecentQuery($limit)->getResult();
     }
+
+    /**
+     * @param int $limit
+     * @return QueryBuilder
+     */
+    public function findMostOldQueryBuilder($limit = 100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.dateCreate', 'ASC')
+            ->setMaxResults($limit)
+
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param int $limit
+     * @return Query
+     */
+    public function findMostOldQuery($limit = 100)
+    {
+        return $this->findMostOldQueryBuilder($limit)->getQuery();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function findMostOldRecent($limit = 100)
+    {
+        return $this->findMostOldQuery($limit)->getResult();
+    }
+
+    /**
+     * @param int $limit
+     * @return QueryBuilder
+     */
+    public function findOrderByTitleUpBuilder($limit = 100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.title', 'DESC')
+            ->setMaxResults($limit)
+
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param int $limit
+     * @return Query
+     */
+    public function findOrderByTitleUpQuery($limit = 100)
+    {
+        return $this->findOrderByTitleUpBuilder($limit)->getQuery();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function findOrderByTitleUp($limit = 100)
+    {
+        return $this->findOrderByTitleUpQuery($limit)->getResult();
+    }
+
+    /**
+     * @param int $limit
+     * @return QueryBuilder
+     */
+    public function findOrderByTitleDownBuilder($limit = 100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.title', 'ASC')
+            ->setMaxResults($limit)
+
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param int $limit
+     * @return Query
+     */
+    public function findOrderByTitleDownQuery($limit = 100)
+    {
+        return $this->findOrderByTitleDownBuilder($limit)->getQuery();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function findOrderByTitleDown($limit = 100)
+    {
+        return $this->findOrderByTitleDownQuery($limit)->getResult();
+    }
 }
