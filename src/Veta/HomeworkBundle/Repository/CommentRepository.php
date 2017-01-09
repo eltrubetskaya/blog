@@ -3,6 +3,8 @@
 namespace Veta\HomeworkBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * CommentRepository
@@ -13,16 +15,31 @@ use Doctrine\ORM\EntityRepository;
 class CommentRepository extends EntityRepository
 {
     /**
-     * @return mixed
+     * @return QueryBuilder
      */
-    public function findMostRecent()
+    public function findMostRecentQueryBuilder()
     {
         $qb = $this->createQueryBuilder('u')
             ->orderBy('u.dateCreate', 'DESC')
 
         ;
-        $query = $qb->getQuery();
 
-        return $query->execute();
+        return $qb;
+    }
+
+    /**
+     * @return Query
+     */
+    public function findMostRecentQuery()
+    {
+        return $this->findMostRecentQueryBuilder()->getQuery();
+    }
+
+    /**
+     * @return array
+     */
+    public function findMostRecent()
+    {
+        return $this->findMostRecentQuery()->getResult();
     }
 }

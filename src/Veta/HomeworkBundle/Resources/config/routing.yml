@@ -7,6 +7,11 @@ veta_homework_post_index:
     defaults: { _controller: VetaHomeworkBundle:Post:index }
     methods: [GET]
 
+veta_homework_post_search:
+    path:     /post/search
+    defaults: { _controller: VetaHomeworkBundle:Post:search }
+    methods: [GET]
+
 veta_homework_post_view:
     path:     /post/{slug}
     defaults: { _controller: VetaHomeworkBundle:Post:view }

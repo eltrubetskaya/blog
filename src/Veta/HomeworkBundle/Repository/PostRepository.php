@@ -84,7 +84,7 @@ class PostRepository extends EntityRepository
      * @param int $limit
      * @return QueryBuilder
      */
-    public function findOrderByTitleUpBuilder($limit = 100)
+    public function findOrderByTitleUpQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
             ->orderBy('u.title', 'DESC')
@@ -101,7 +101,7 @@ class PostRepository extends EntityRepository
      */
     public function findOrderByTitleUpQuery($limit = 100)
     {
-        return $this->findOrderByTitleUpBuilder($limit)->getQuery();
+        return $this->findOrderByTitleUpQueryBuilder($limit)->getQuery();
     }
 
     /**
@@ -117,7 +117,7 @@ class PostRepository extends EntityRepository
      * @param int $limit
      * @return QueryBuilder
      */
-    public function findOrderByTitleDownBuilder($limit = 100)
+    public function findOrderByTitleDownQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
             ->orderBy('u.title', 'ASC')
@@ -134,7 +134,7 @@ class PostRepository extends EntityRepository
      */
     public function findOrderByTitleDownQuery($limit = 100)
     {
-        return $this->findOrderByTitleDownBuilder($limit)->getQuery();
+        return $this->findOrderByTitleDownQueryBuilder($limit)->getQuery();
     }
 
     /**
@@ -144,5 +144,54 @@ class PostRepository extends EntityRepository
     public function findOrderByTitleDown($limit = 100)
     {
         return $this->findOrderByTitleDownQuery($limit)->getResult();
+    }
+
+    /**
+     * @param $q
+     * @param $search
+     * @param int $limit
+     * @return QueryBuilder
+     */
+    public function findQQueryBuilder($q, $search, $limit=100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where("u.status = '1'")
+            ->andWhere("u.title like '%$q%' or u.text like '%$q%'  or u.description like '%$q%'")
+        ;
+        foreach ($search as $word) {
+            $qb
+                ->orWhere("u.title like '%$word%' or u.text like '%$word%'  or u.description like '%$word%'")
+                ;
+        }
+
+        $qb
+            ->orderBy('u.dateCreate', 'DESC')
+            ->setMaxResults($limit)
+
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param $q
+     * @param $search
+     * @param int $limit
+     * @return Query
+     */
+    public function findQQuery($q, $search, $limit=100)
+    {
+        return $this->findQQueryBuilder($q, $search, $limit)->getQuery();
+    }
+
+    /**
+     * @param $q
+     * @param $search
+     * @param int $limit
+     * @return array
+     */
+    public function findQ($q, $search, $limit=100)
+    {
+        return $this->findQQuery($q, $search, $limit)->getResult();
     }
 }

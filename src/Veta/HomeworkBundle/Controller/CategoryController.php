@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $all_posts = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
         $query = $category->getPosts();
         $paginator  = $this->get('knp_paginator');
-        $posts = $paginator->paginate($query, $request->query->getInt('page', 1), 1);
+        $posts = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
 
 
         return $this->render('VetaHomeworkBundle:Category:index.html.twig', [

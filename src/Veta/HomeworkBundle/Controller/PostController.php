@@ -2,6 +2,7 @@
 
 namespace Veta\HomeworkBundle\Controller;
 
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,14 +29,13 @@ class PostController extends Controller
         $breadcrumbs->addRouteItem("Post", "veta_homework_post_index");
 
         $em = $this->getDoctrine()->getManager();
-
-        if((($request->query->get('sort_date') == null) && ($request->query->get('sort_title') == null)) || ($request->query->get('sort_date') == 'new')){
+        if ((($request->query->get('sort_date') == null) && ($request->query->get('sort_title') == null)) || ($request->query->get('sort_date') == 'new')) {
             $query = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecentQuery();
         } else {
-            if($request->query->get('sort_date') == 'old') {
+            if ($request->query->get('sort_date') == 'old') {
                 $query = $em->getRepository('VetaHomeworkBundle:Post')->findMostOldQuery();
             } else {
-                if($request->query->get('sort_title') == 'up') {
+                if ($request->query->get('sort_title') == 'up') {
                     $query = $em->getRepository('VetaHomeworkBundle:Post')->findOrderByTitleUp();
                 } else {
                     $query = $em->getRepository('VetaHomeworkBundle:Post')->findOrderByTitleDown();
@@ -43,17 +43,26 @@ class PostController extends Controller
             }
         }
 
-        $paginator  = $this->get('knp_paginator');
-        if($request->query->get('count') != null){
-            $count = $request->query->get('count');
-        } else {
-            $count = 5;
-        }
-        $posts = $paginator->paginate($query, $request->query->getInt('page', 1), $count);
+        $posts = $this->sortPost($request, $query);
         return $this->render('VetaHomeworkBundle:Post:index.html.twig', [
             'posts' => $posts,
 
         ]);
+    }
+
+    /**
+     * @param $request
+     * @return PaginationInterface
+     */
+    private function sortPost($request, $query)
+    {
+        $paginator  = $this->get('knp_paginator');
+        if ($request->query->get('count') != null) {
+            $count = $request->query->get('count');
+        } else {
+            $count = 5;
+        }
+        return $paginator->paginate($query, $request->query->getInt('page', 1), $count);
     }
 
     /**
@@ -94,6 +103,33 @@ class PostController extends Controller
         return $this->render('VetaHomeworkBundle:Post:view.html.twig', [
             'form' => $form->createView(),
             'post' => $post,
+            'all_posts' => $all_posts,
+
+        ]);
+    }
+
+    /**
+     * Search data Posts
+     *
+     * @Route("/post/search", name="search")
+     * @Method("GET")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function searchAction(Request $request)
+    {
+        $q = $request->query->get('q');
+        $search = explode(" ", $q);
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('VetaHomeworkBundle:Post')->findQ($q, $search, 10);
+        if (!$query) {
+            $this->addFlash('search', "Search for text: \"$q\" no posts ... ");
+        }
+        $all_posts = $em->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
+        $posts = $this->sortPost($request, $query);
+        return $this->render('VetaHomeworkBundle:Post:search.html.twig', [
+            'posts' => $posts,
             'all_posts' => $all_posts,
 
         ]);
