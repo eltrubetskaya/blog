@@ -10,6 +10,32 @@
                 {{ wo_render_breadcrumbs() }}
             </div>
         {% endblock %}
+        <script type="text/javascript">
+            function countLikesPost(id, likes, slug) {
+                if ($.session.get(slug)){
+                    $('#likes_post_'+id ).html('<a style="color: #999; text-decoration: none;cursor: pointer" class="like">' +
+                            '<span class="heart"><i class="glyphicon glyphicon-heart-empty"></i></span>' +
+                            '<span class="likes"> ' + $.session.get(slug) + ' </span>' +
+                            ' Likes ' +
+                            '</a>');
+
+                    $.session.remove(slug);
+                } else {
+                    $('#likes_post_'+id ).html('<a style="color: #333; text-decoration: none;cursor: pointer" class="like_post ">' +
+                            '<span class="heart"><i class="glyphicon glyphicon-heart"></i></span>' +
+                            '<span class="likes"> ' + (likes + 1) + ' </span>' +
+                            ' Likes ' +
+                            '</a>');
+                    $.session.set(slug, likes);
+                }
+
+                $.ajax({
+                    url: "{{ path('veta_homework_post_likes') }}",
+                    method: "POST",
+                    data: "id=" + id,
+                });
+            }
+        </script>
         {% block main %}{% endblock %}
     </div>
     {% block footer %}

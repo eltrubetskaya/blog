@@ -27,6 +27,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             $post->setText($faker->text(300));
             $post->setStatus(true);
             $post->setDateCreate($faker->dateTime);
+            $post->setLikes($faker->numberBetween(5, 25));
             $manager->persist($post);
             $this->addReference("post_{$i}", $post);
         }

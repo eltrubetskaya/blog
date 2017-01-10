@@ -122,6 +122,13 @@ class Post
     private $tags;
 
     /**
+     * @var integer
+     * @ORM\Column(name="likes", type="integer", nullable=true)
+     *
+     */
+    private $likes;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -362,6 +369,30 @@ class Post
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set likes
+     *
+     * @param integer $likes
+     *
+     * @return Post
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    /**
+     * Get likes
+     *
+     * @return integer
+     */
+    public function getLikes()
+    {
+        return $this->likes;
     }
 
     /**

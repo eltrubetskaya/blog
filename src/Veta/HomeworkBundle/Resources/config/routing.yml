@@ -12,6 +12,11 @@ veta_homework_post_search:
     defaults: { _controller: VetaHomeworkBundle:Post:search }
     methods: [GET]
 
+veta_homework_post_likes:
+    path:     /post/like
+    defaults: { _controller: VetaHomeworkBundle:Post:likes }
+    methods: [POST]
+
 veta_homework_post_view:
     path:     /post/{slug}
     defaults: { _controller: VetaHomeworkBundle:Post:view }

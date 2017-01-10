@@ -1,12 +1,13 @@
 <?php
-
 namespace Veta\HomeworkBundle\Controller;
 
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Veta\HomeworkBundle\Entity\Comment;
 use Veta\HomeworkBundle\Form\Type\CommentType;
@@ -48,6 +49,36 @@ class PostController extends Controller
             'posts' => $posts,
 
         ]);
+    }
+
+    /**
+     * Likes Post
+     *
+     * @Route("/post/like", name="likes")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function likesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->getRepository('VetaHomeworkBundle:Post')->find($request->request->get('id'));
+
+        if ($request->getSession()->get($post->getSlug())) {
+            $likes = $post->getLikes() - 1;
+            $post->setLikes($likes);
+            $em->flush();
+            $request->getSession()->remove($post->getSlug());
+        } else {
+            $session = new Session();
+            $likes = $post->getLikes() + 1;
+            $post->setLikes($likes);
+            $em->flush();
+            $session->set($post->getSlug(), $post->getLikes());
+        }
+
+        return new Response();
     }
 
     /**
