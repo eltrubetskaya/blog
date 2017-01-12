@@ -1,12 +1,12 @@
 {% extends "VetaHomeworkBundle::layout.html.twig" %}
 
-{% block title %}VetaHomeworkBundle:Category{% endblock %}
+{% block title %}{{ 'bundle'|trans({'%action%': 'Tag'}) }}{% endblock %}
 
 {% block main %}
     <div class="row">
         <div class="col-sm-8 blog-main">
             <h2>
-                <small>Posts for Tag: </small>
+                <small>{{ 'posts_tag'|trans }}: </small>
                 "{{ tag }}"
             </h2>
             <hr>

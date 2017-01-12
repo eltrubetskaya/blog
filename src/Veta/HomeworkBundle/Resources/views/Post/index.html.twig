@@ -1,36 +1,35 @@
 {% extends "VetaHomeworkBundle::layout.html.twig" %}
 
-{% block title %}VetaHomeworkBundle:Post{% endblock %}
+{% block title %}{{ 'bundle'|trans({'%action%': 'Post'}) }}{% endblock %}
 
 {% block main %}
     <div class="row">
         <div class="col-sm-8 blog-main">
             <div class="blog-header">
-                <h1 class="blog-title">The Post List</h1>
-                <p class="lead blog-description">Last posts most recent:</p>
+                <h1 class="blog-title" style="margin-bottom: 40px">{{ 'the_list_posts'|trans }}</h1>
                 <div class="pull-right">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default">Sort By Date</button>
+                        <button type="button" class="btn btn-default">{{ 'sort_by_date'|trans }}</button>
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li {% if((app.request.get("sort_date") == "new") or (app.request.get("sort_date") is null )) %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_date':'new' }) }}">new</a></li>
-                            <li {% if(app.request.get("sort_date") == "old") %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_date':'old' }) }}">old</a></li>
+                            <li {% if((app.request.get("sort_date") == "new") or (app.request.get("sort_date") is null )) %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_date':'new' }) }}">{{ 'most_resent'|trans }}</a></li>
+                            <li {% if(app.request.get("sort_date") == "old") %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_date':'old' }) }}">{{ 'most_old'|trans }}</a></li>
                         </ul>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default">Sort By Title</button>
+                        <button type="button" class="btn btn-default">{{ 'sort_by_title'|trans }}</button>
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li {% if(app.request.get("sort_title") == "up") %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_title':'up' }) }}">up</a></li>
-                            <li {% if(app.request.get("sort_title") == "down") %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_title':'down' }) }}">down</a></li>
+                            <li {% if(app.request.get("sort_title") == "up") %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_title':'up' }) }}">{{ 'by_title'|trans }}<span class="glyphicon glyphicon-arrow-up"></span></a></li>
+                            <li {% if(app.request.get("sort_title") == "down") %}  class="active" {% endif %}><a href="{{ path('veta_homework_post_index', {'sort_title':'down' }) }}">{{ 'by_title'|trans }}<span class="glyphicon glyphicon-arrow-down"></span></a></li>
                         </ul>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default">Count Posts in Page</button>
+                        <button type="button" class="btn btn-default">{{ 'count_posts_per_page'|trans }}</button>
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                         </button>
@@ -58,13 +57,13 @@
                                 <a style="color: #333; text-decoration: none;cursor: pointer" class="like_post">
                                     <span class="heart"><i class="glyphicon glyphicon-heart"></i></span>
                                     <span class="likes">{{ post.likes }}</span>
-                                    Likes
+                                    {{ 'likes'|trans }}
                                 </a>
                             {% else %}
                                 <a style="color: #999; text-decoration: none;cursor: pointer" class="like ">
                                     <span class="heart"><i class="glyphicon glyphicon-heart-empty"></i></span>
                                     <span class="likes">{{ post.likes }}</span>
-                                    Likes
+                                    {{ 'likes'|trans }}
                                 </a>
                             {% endif %}
                             </span>

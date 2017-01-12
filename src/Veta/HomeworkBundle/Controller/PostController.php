@@ -42,9 +42,12 @@ class PostController extends Controller
             }
         }
 
+        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
+
         $posts = $this->sortPost($request, $query);
         return $this->render('VetaHomeworkBundle:Post:index.html.twig', [
             'posts' => $posts,
+            'postsSidebarModule' => $postsSidebarModule,
 
         ]);
     }

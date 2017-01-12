@@ -3,6 +3,8 @@
 namespace Veta\HomeworkBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
@@ -22,6 +24,18 @@ class SiteController extends Controller
             'posts' => $posts,
             'postsSidebarModule' => $postsSidebarModule,
 
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function setupAction(Request $request)
+    {
+        $locale = $request->getLocale();
+        return $this->redirectToRoute('veta_homework_homepage', [
+           '_locale' => $locale
         ]);
     }
 }

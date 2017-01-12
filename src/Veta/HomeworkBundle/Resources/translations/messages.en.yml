@@ -1,0 +1,20 @@
+blog_template_built_for: Blog template built for
+back_to_top: Back to top
+btn_send: Send
+btn_add: Add
+search: Search
+blog: Blog
+the_list_categories: The Categories List
+the_list_posts: The Posts List
+the_homework_template_of_creating_a_blog: The homework template of creating a blog.
+bundle: Blog > VetaHomeworkBundle:%action%
+posts_tag: Posts Tag
+sort_by_date: Sort By Date
+sort_by_title: Sort By Title
+count_posts_per_page: Count Posts Per Page
+most_resent: Most Recent
+most_old: Most Old
+by_title: Title
+likes: Likes
+comments: Comments
+new_comment: New Comment

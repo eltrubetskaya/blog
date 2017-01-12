@@ -18,3 +18,8 @@ $('.like_post').hover(function () {
     $(this).css('color','#333');
     $(this).find('i').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
 });
+$('#ua, #en').hover(function () {
+    $(this).children().css('color','#333');
+}, function () {
+    $(this).children().css('color','#fff');
+});

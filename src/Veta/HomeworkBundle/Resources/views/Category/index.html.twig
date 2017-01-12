@@ -1,12 +1,12 @@
 {% extends "VetaHomeworkBundle::layout.html.twig" %}
 
-{% block title %}VetaHomeworkBundle:Category{% endblock %}
+{% block title %}{{ 'bundle'|trans({'%action%': 'Category'}) }}{% endblock %}
 
 {% block main %}
     <div class="row">
         <div class="col-sm-8 blog-main">
             <div class="sidebar-module sidebar-module-inset">
-                <h3>The Category:</h3>
+                <h3>{{ 'the_list_categories'|trans }}:</h3>
                 {% for category in categories %}
                     <h5>
                         {% if category.lvl > 0 %}{% for i in 1..category.lvl %}<span class="indent" style="margin-left: 20px"></span>{% endfor %}{% endif %}

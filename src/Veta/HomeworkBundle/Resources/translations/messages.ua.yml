@@ -1,0 +1,20 @@
+blog_template_built_for: Шаблон Блог створений для
+back_to_top: Догори
+btn_send: Відправити
+btn_add: Додати
+search: Пошук
+blog: Блог
+the_list_categories: Список Категорій
+the_list_posts: Список Постів
+the_homework_template_of_creating_a_blog: Шаблон створення блогу.
+bundle: Блог > VetaHomeworkBundle:%action%
+posts_tag: Пости тега
+sort_by_date: Сортування за датою
+sort_by_title: Сортування за назвою
+count_posts_per_page: Кількість постів на сторінці
+most_resent: Найновіші
+most_old: Найстаріші
+by_title: Назва
+likes: Мені подобається
+comments: Коментарі
+new_comment: Новий коментар
