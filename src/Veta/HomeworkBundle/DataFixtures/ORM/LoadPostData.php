@@ -12,8 +12,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -21,13 +19,16 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $faker = Factory::create();
         for ($i = 1; $i <= 10; $i++) {
             $post = new Post();
-            $post->setTitle($faker->unique()->name);
-            $post->setCategory($this->getReference('category_'. rand(1, 5)));
-            $post->setDescription($faker->text(100));
-            $post->setText($faker->text(300));
-            $post->setStatus(true);
-            $post->setDateCreate($faker->dateTime);
-            $post->setLikes($faker->numberBetween(5, 25));
+            $post
+                ->setTitle($faker->unique()->name)
+                ->setCategory($this->getReference('category_'. rand(1, 5)))
+                ->setDescription($faker->text(100))
+                ->setText($faker->text(300))
+                ->setStatus(true)
+                ->setDateCreate($faker->dateTime)
+                ->setLikes($faker->numberBetween(5, 25))
+            ;
+
             $manager->persist($post);
             $this->addReference("post_{$i}", $post);
         }
@@ -36,8 +37,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Get the order of this fixture
-     *
      * @return integer
      */
     public function getOrder()

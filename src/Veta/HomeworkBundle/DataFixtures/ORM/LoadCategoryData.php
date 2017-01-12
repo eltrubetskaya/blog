@@ -12,8 +12,6 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 {
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -22,9 +20,11 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $parent = null;
         for ($i = 1; $i <= 5; $i++) {
             $category = new Category();
-            $category->setTitle($faker->unique()->name);
-            $category->setStatus(true);
-            $category->setParent($parent);
+            $category
+                ->setTitle($faker->unique()->name)
+                ->setStatus(true)
+                ->setParent($parent)
+            ;
             if ($i === 3) {
                 $parent = null;
             } else {

@@ -12,8 +12,6 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -21,9 +19,10 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
         $faker = Factory::create();
         for ($i = 1; $i <= 5; $i++) {
             $comment = new Comment();
-            $comment->setPost($this->getReference('post_'. rand(1, 10)));
-            $comment->setText($faker->text(200));
-            $comment->setDateCreate(new \DateTime);
+            $comment
+                ->setPost($this->getReference('post_'. rand(1, 10)))
+                ->setText($faker->text(200))
+            ;
 
             $manager->persist($comment);
         }
@@ -32,8 +31,6 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Get the order of this fixture
-     *
      * @return integer
      */
     public function getOrder()

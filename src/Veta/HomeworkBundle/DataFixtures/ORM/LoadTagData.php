@@ -12,8 +12,6 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
-     * Load data fixtures with the passed EntityManager
-     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -21,7 +19,9 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
         $faker = Factory::create();
         for ($i = 1; $i <= 5; $i++) {
             $tag = new Tag();
-            $tag->setTitle($faker->unique()->name);
+            $tag
+                ->setTitle($faker->unique()->name)
+            ;
             $manager->persist($tag);
             $this->getReference('post_'. rand(1, 10))->addTag($tag);
         }
@@ -30,8 +30,6 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Get the order of this fixture
-     *
      * @return integer
      */
     public function getOrder()

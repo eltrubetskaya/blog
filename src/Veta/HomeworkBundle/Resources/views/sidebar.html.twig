@@ -2,3 +2,11 @@
     <h3>The Category List:</h3>
     {{ knp_menu_render('sidebar') }}
 </div>
+<div class="sidebar-module">
+    <h4><a title="The Post List" href="{{ path('veta_homework_post_index') }}" style="color: #333;text-decoration: none;cursor: pointer">The Post List</a></h4>
+    <ol class="list-unstyled">
+        {% for post in postsSidebarModule %}
+            <li><a title="{{ post.title }}" href="{{ path('veta_homework_post_view', {'slug': post.slug}) }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ol>
+</div>

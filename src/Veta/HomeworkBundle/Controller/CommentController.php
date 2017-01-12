@@ -14,8 +14,6 @@ use Veta\HomeworkBundle\Form\Type\CommentType;
 class CommentController extends Controller
 {
     /**
-     * Create data Comment
-     *
      * @Route("/comment", name="create")
      * @Method("POST")
      *
@@ -39,14 +37,16 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
             return $this->redirectToRoute('veta_homework_post_view', [
-                'slug' => $comment->getPost()->getSlug()
+                'slug' => $comment->getPost()->getSlug(),
+
             ]);
         }
 
         $this->addFlash('info', 'Error Comment add');
 
         return $this->redirectToRoute('veta_homework_post_view', [
-            'slug' => $comment->getPost()->getSlug()
+            'slug' => $comment->getPost()->getSlug(),
+
         ]);
     }
 }

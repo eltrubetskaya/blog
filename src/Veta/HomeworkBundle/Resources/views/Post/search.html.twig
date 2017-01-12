@@ -36,14 +36,6 @@
         </div>
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
             {% include 'VetaHomeworkBundle::sidebar.html.twig' %}
-            <div class="sidebar-module">
-                <h4><a title="The Post List" href="{{ path('veta_homework_post_index') }}" style="color: #333;text-decoration: none;cursor: pointer">The Post List</a></h4>
-                <ol class="list-unstyled">
-                    {% for all in all_posts %}
-                        <li><a title="{{ all.title }}" href="{{ path('veta_homework_post_view', {'slug': all.slug}) }}">{{ all.title }}</a></li>
-                    {% endfor %}
-                </ol>
-            </div>
         </div><!-- /.blog-sidebar -->
     </div><!-- /.row -->
 {% endblock %}
