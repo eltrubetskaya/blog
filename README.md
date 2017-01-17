@@ -17,9 +17,10 @@ _in this project used:_
   * **SonataAdminBundle**
   * **SonataFormatterBundle**
   * **RedCodeTreeBundle**
-  * **StofDoctrineExtensionsBundle (Sluggable Timestampable Tree)**
+  * **StofDoctrineExtensionsBundle (Sluggable Timestampable Tree Translatable)**
   * **BreadcrumbsBundle**
   * **KnpMenuBundle**
   * **BraincraftedBootstrapBundle**
   * **KnpPaginatorBundle**
+  * **SonataTranslationBundle**
   

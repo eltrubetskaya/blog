@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Sonata\TranslationBundle\SonataTranslationBundle(),
             new Veta\HomeworkBundle\VetaHomeworkBundle(),
         ];
 

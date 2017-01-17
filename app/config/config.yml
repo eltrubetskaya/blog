@@ -63,6 +63,15 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        mappings:
+            gedmo_translatable:
+                type: annotation
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                is_bundle: false
+
+
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -74,11 +83,13 @@ swiftmailer:
 
 # StofDoctrineExtensionsBundle Configuration
 stof_doctrine_extensions:
+    default_locale: en
     orm:
         default:
             sluggable: true
             timestampable: true
             tree: true
+            translatable: true
 
 sonata_formatter:
     formatters:
@@ -200,3 +211,10 @@ braincrafted_bootstrap:
         variables_file: ~
         bootstrap_output: "%kernel.root_dir%/Resources/less/bootstrap.less"
         bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
+
+sonata_translation:
+    locales: [en, uk]
+    default_locale: en
+    # here enable the types you need
+    gedmo:
+        enabled: true

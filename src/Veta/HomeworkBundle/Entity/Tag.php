@@ -18,7 +18,7 @@ use Veta\HomeworkBundle\Entity\Translation\TagTranslation;
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
  */
-class Tag extends AbstractPersonalTranslatable  implements TranslatableInterface
+class Tag extends AbstractPersonalTranslatable implements TranslatableInterface
 {
     /**
      * @var integer

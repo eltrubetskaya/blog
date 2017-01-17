@@ -6,15 +6,19 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\TranslationBundle\Filter\TranslationFieldFilter;
 use Veta\HomeworkBundle\Entity\Tag;
 
 class TagAdmin extends AbstractAdmin
 {
+    /**
+     * @param FormMapper $formMapper
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->with('Content')
-            ->add('title')
+            ->add('title', 'text')
             ->end()
         ;
     }
@@ -29,7 +33,7 @@ class TagAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title')
+            ->addIdentifier('title', TranslationFieldFilter::class)
         ;
     }
 
