@@ -6,18 +6,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
+use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
-use Veta\HomeworkBundle\Entity\Post;
+use Veta\HomeworkBundle\Entity\Translation\TagTranslation;
 
 /**
- * Tag
- *
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\TagRepository")
+ * @Gedmo\TranslationEntity(class="Veta\HomeworkBundle\Entity\Translation\TagTranslation")
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
  */
-class Tag
+class Tag extends AbstractPersonalTranslatable  implements TranslatableInterface
 {
     /**
      * @var integer
@@ -29,9 +30,11 @@ class Tag
     private $id;
 
     /**
-     * @var string
-     * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @Gedmo\Translatable
      *
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @SymfonyConstraints\NotBlank()
      * @SymfonyConstraints\Length(
      *     min="3"
@@ -53,22 +56,34 @@ class Tag
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags", cascade={"persist","detach","merge"})
+     * @ORM\ManyToMany(targetEntity="Veta\HomeworkBundle\Entity\Post", mappedBy="tags", cascade={"persist","detach","merge"})
      */
     private $posts;
 
     /**
-     * Constructor
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Veta\HomeworkBundle\Entity\Translation\TagTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    protected $translations;
+
+    /**
+     * Tag constructor.
      */
     public function __construct()
     {
+        parent::__construct();
         $this->posts = new ArrayCollection();
     }
 
-
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -77,8 +92,6 @@ class Tag
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return Tag
@@ -91,8 +104,6 @@ class Tag
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -101,8 +112,6 @@ class Tag
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
     public function getSlug()
@@ -111,37 +120,19 @@ class Tag
     }
 
     /**
-     * Add post
-     *
-     * @param Post $post
-     *
-     * @return Tag
-     */
-    public function addPost(Post $post)
-    {
-        $this->posts[] = $post;
-
-        return $this;
-    }
-
-    /**
-     * Remove post
-     *
-     * @param Post $post
-     */
-    public function removePost(Post $post)
-    {
-        $this->posts->removeElement($post);
-    }
-
-    /**
-     * Get posts
-     *
      * @return Collection
      */
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @param $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     /**

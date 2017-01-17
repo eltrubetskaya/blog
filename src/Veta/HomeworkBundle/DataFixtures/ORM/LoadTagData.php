@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Veta\HomeworkBundle\Entity\Tag;
 use Faker\Factory;
+use Veta\HomeworkBundle\Entity\Translation\TagTranslation;
 
 class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -19,14 +20,14 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
         $faker = Factory::create();
         for ($i = 1; $i <= 5; $i++) {
             $tag = new Tag();
-            $tag
-                ->setTitle($faker->unique()->name)
-            ;
+            $title = $faker->unique()->jobTitle;
+            $tag->setTitle($title . ' en');
+            $tag->addTranslation(new TagTranslation('uk', 'title', $title . ' uk'));
+
             $manager->persist($tag);
             $this->getReference('post_'. rand(1, 10))->addTag($tag);
+            $manager->flush();
         }
-
-        $manager->flush();
     }
 
     /**
