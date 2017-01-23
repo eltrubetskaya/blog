@@ -12,6 +12,8 @@ GeekHub HomeWork - Blog (Symfony)
 
 `$ bin/console doctrine:fixtures:load`
 
+`$ bin/console fos:user:create admin --super-admin`
+
 _in this project used:_
 
   * **SonataAdminBundle**
@@ -23,4 +25,5 @@ _in this project used:_
   * **BraincraftedBootstrapBundle**
   * **KnpPaginatorBundle**
   * **SonataTranslationBundle**
+  * **FOSUserBundle**
   

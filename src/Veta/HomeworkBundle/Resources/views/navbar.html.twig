@@ -11,6 +11,37 @@
         <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
             {% set menu = knp_menu_get('main', [], {'slug': app.request.get("slug")}) %}
             {{ knp_menu_render(menu, { 'style': 'navbar' }) }}
+            <!-- Button trigger modal -->
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <p class="navbar-text navbar-right">
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}" class="navbar-link">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                </p>
+            {% else %}
+                <button class="btn btn-default navbar-btn navbar-right" data-toggle="modal" data-target="#myModal">
+                    {{ 'log_in'|trans }}
+                </button>
+            {% endif %}
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            {{ render(controller('FOSUserBundle:Security:login')) }}
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ path('fos_user_registration_register') }}">
+                                <input style="max-width: 300px;padding: 15px;margin: 0 auto;" class="btn btn-lg btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'sign_in'|trans }}" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form class="navbar-form navbar-right" role="search" action="{{ path('veta_homework_post_search') }}" method="get">
                 <div class="form-group">
                     <input class="form-control" placeholder="{{ 'search'|trans }}" name="q" id="search-id" type="search">

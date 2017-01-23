@@ -7,6 +7,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="http://bootstrap-3.ru/examples/signin/signin.css">
     <link href="http://bootstrap-3.ru/examples/blog/blog.css" rel="stylesheet">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
@@ -19,7 +20,7 @@
     <![endif]-->
     {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 </head>
-<body>
+<body style="background-color: white">
 
     {% block body %}{% endblock %}
 
