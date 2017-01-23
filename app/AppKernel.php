@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Sonata\TranslationBundle\SonataTranslationBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new Veta\HomeworkBundle\VetaHomeworkBundle(),
         ];
 

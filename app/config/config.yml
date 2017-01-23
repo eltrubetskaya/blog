@@ -28,6 +28,7 @@ framework:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        default_locale: "%locale%"
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -141,13 +142,12 @@ sonata_admin:
     title_logo: /bundles/sonataadmin/logo_title.png
     templates:
         dashboard: SonataAdminBundle:Core:dashboard.html.twig
-        layout: SonataAdminBundle::layout.html.twig
+        layout: VetaHomeworkBundle:Admin:standard_layout.html.twig
         search: SonataAdminBundle:Core:search.html.twig
         search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
     dashboard:
         blocks:
             - { position: left, type: sonata.admin.block.admin_list, class: "col-lg-4" }
-
             - { position: right, type: sonata.block.service.text, class: "col-lg-8", settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p>"} }
 
 sonata_block:
@@ -218,3 +218,8 @@ sonata_translation:
     # here enable the types you need
     gedmo:
         enabled: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Veta\HomeworkBundle\Entity\User

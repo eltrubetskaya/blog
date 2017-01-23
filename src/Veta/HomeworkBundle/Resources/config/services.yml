@@ -16,7 +16,7 @@ services:
             - 'VetaHomeworkBundle:CategoryAdmin'
             - 'title'
         calls:
-            - [ setTranslationDomain, [Veta\Homework\Bundle]]
+            - [ setTranslationDomain, [VetaHomeworkBundle]]
 
     veta_homework.admin.tag_admin:
         class: Veta\HomeworkBundle\Admin\TagAdmin
@@ -27,7 +27,7 @@ services:
             - Veta\HomeworkBundle\Entity\Tag
             - 'SonataAdminBundle:CRUD'
         calls:
-            - [ setTranslationDomain, [Veta\Homework\Bundle]]
+            - [ setTranslationDomain, [VetaHomeworkBundle]]
 
     veta_homework.admin.comment_admin:
         class: Veta\HomeworkBundle\Admin\CommentAdmin
@@ -38,7 +38,7 @@ services:
             - Veta\HomeworkBundle\Entity\Comment
             - 'SonataAdminBundle:CRUD'
         calls:
-            - [ setTranslationDomain, [Veta\Homework\Bundle]]
+            - [ setTranslationDomain, [VetaHomeworkBundle]]
 
     veta_homework.menu.menu_builder:
         class: Veta\HomeworkBundle\Menu\MenuBuilder
@@ -52,9 +52,3 @@ services:
         arguments: ['%kernel.default_locale%']
         tags:
             - { name: kernel.event_subscriber }
-
-    veta_homework.event_listener.user_locale_listener:
-        class: Veta\HomeworkBundle\EventListener\UserLocaleListener
-        arguments: ['@session']
-        tags:
-            - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }

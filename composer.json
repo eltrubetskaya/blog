@@ -33,7 +33,8 @@
         "braincrafted/bootstrap-bundle": "^2.2",
         "knplabs/knp-paginator-bundle": "^2.5",
         "bower-asset/bootstrap": "^3.3",
-        "sonata-project/translation-bundle": "^2.1"
+        "sonata-project/translation-bundle": "^2.1",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
