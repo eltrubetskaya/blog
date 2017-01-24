@@ -1,0 +1,17 @@
+{% if app.user and is_granted('ROLE_SONATA_ADMIN') %}
+    <li class="user-header bg-light-blue">
+        <img src="{{ asset('src/img/noavatar92.7b2fde640943965cc88df0cdee365907.png') }}" class="img-circle" alt="Avatar">
+        <p>{{ app.user.username }}</p>
+    </li>
+
+
+    <li class="user-footer">
+        <div class="pull-left">
+            <a href="{{ path('admin_veta_homework_user_edit', {'id' : app.user.id}) }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
+        </div>
+
+        <div class="pull-right">
+            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out fa-fw"></i> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+        </div>
+    </li>
+{% endif %}
