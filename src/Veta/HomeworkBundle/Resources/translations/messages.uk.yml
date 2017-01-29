@@ -1,6 +1,6 @@
 blog_template_built_for: Шаблон Блог створений для
 back_to_top: Догори
-btn_send: Відправити
+btn_search: Відправити
 btn_add: Додати
 search: Пошук
 blog: Блог
@@ -19,4 +19,4 @@ likes: Мені подобається
 comments: Коментарі
 new_comment: Новий коментар
 log_in: Вхід
-sign_in: Регістрація
+sign_up: Регістрація

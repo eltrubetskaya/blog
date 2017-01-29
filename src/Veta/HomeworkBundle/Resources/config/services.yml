@@ -65,3 +65,14 @@ services:
         arguments: ['%kernel.default_locale%']
         tags:
             - { name: kernel.event_subscriber }
+
+    veta_homework.event_listener.exception_listener:
+        class: Veta\HomeworkBundle\EventListener\ExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    veta_homework.event_listener.request_listener:
+        class: Veta\HomeworkBundle\EventListener\RequestListener
+        arguments: ["@twig", "@form.factory", "@router"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

@@ -1,6 +1,6 @@
 blog_template_built_for: Blog template built for
 back_to_top: Back to top
-btn_send: Send
+btn_search: Search
 btn_add: Add
 search: Search
 blog: Blog
@@ -19,4 +19,4 @@ likes: Likes
 comments: Comments
 new_comment: New Comment
 log_in: Login
-sign_in: Signin
+sign_up: Signup
