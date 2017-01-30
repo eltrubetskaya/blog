@@ -32,19 +32,32 @@
             </div>
             <h3>{{ 'comments'|trans }}</h3>
             <hr>
-            {{ form_start(form) }}
-            <div class="form-group">
-                <strong>{{ 'new_comment'|trans }}</strong>
-                <span class="glyphicon glyphicon-edit pull-right" aria-hidden="true"></span>
-            </div>
-            {{ form_widget(form) }}
-            <div class="form-group">
-                <div class="pull-right ">
-                    <button type="submit" class="btn btn-default">{{ "btn_add"|trans }}</button>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                {{ form_start(form) }}
+                <div class="form-group">
+                    <strong>{{ 'new_comment'|trans }}</strong>
+                    <span class="glyphicon glyphicon-edit pull-right" aria-hidden="true"></span>
                 </div>
-            </div>
-            {{ form_end(form) }}
-            <hr style="margin-top: 80px">
+                {{ form_widget(form) }}
+                <div class="form-group">
+                    <div class="pull-right ">
+                        <button type="submit" class="btn btn-default">{{ "btn_add"|trans }}</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+
+                <hr style="margin-top: 80px">
+            {% else %}
+                <a style="cursor: pointer" data-toggle="modal" data-target="#myModal">
+                    {{ 'log_in'|trans }}
+                </a>
+                <br>
+                <a href="{{ path('fos_user_registration_register') }}">
+                    {{ 'sign_up'|trans }}
+                </a>
+                <hr>
+            {% endif %}
             {% block message_block %}
                 {% for flash_message in app.session.flashBag.get('info') %}
                     <div class="alert alert-danger" role="alert">
@@ -58,7 +71,11 @@
                         <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="{{ asset('src/img/noavatar92.7b2fde640943965cc88df0cdee365907.png') }}"  style="width: 64px; height: 64px;">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading"><small>{{ comment.dateCreate|date }}</small></h4>
+                        <h4 class="media-heading">
+                            {{ comment.user.username }}
+                            <br>
+                            <small>{{ comment.dateCreate|date }}</small>
+                        </h4>
                         {{ comment.text|raw }}
                     </div>
                 </div>

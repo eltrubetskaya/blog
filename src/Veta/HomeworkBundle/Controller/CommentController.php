@@ -23,7 +23,7 @@ class CommentController extends Controller
     public function createAction(Request $request)
     {
         $comment = new Comment();
-
+        $comment->setUser($this->get('security.token_storage')->getToken()->getUser());
         $form = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('veta_homework_comment_create'),
             'method' => 'POST',

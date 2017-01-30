@@ -6,10 +6,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
 use Veta\HomeworkBundle\Entity\Post;
+use Veta\HomeworkBundle\Entity\User;
 
 /**
- * Comment
- *
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\CommentRepository")
  */
 class Comment
@@ -55,6 +54,13 @@ class Comment
     private $post;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments", cascade={"persist","merge"})
+     */
+    private $user;
+
+    /**
      * Comment constructor.
      */
     public function __construct()
@@ -63,8 +69,6 @@ class Comment
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -73,8 +77,6 @@ class Comment
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      *
      * @return Comment
@@ -87,8 +89,6 @@ class Comment
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()
@@ -97,8 +97,6 @@ class Comment
     }
 
     /**
-     * Set dateCreate
-     *
      * @param \DateTime $dateCreate
      *
      * @return Comment
@@ -111,8 +109,6 @@ class Comment
     }
 
     /**
-     * Get dateCreate
-     *
      * @return \DateTime
      */
     public function getDateCreate()
@@ -121,8 +117,6 @@ class Comment
     }
 
     /**
-     * Set post
-     *
      * @param Post $post
      *
      * @return Comment
@@ -135,13 +129,30 @@ class Comment
     }
 
     /**
-     * Get post
-     *
      * @return Post
      */
     public function getPost()
     {
         return $this->post;
+    }
+    /**
+     * @param User $user
+     *
+     * @return Comment
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

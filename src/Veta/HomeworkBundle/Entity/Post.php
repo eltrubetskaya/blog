@@ -13,8 +13,6 @@ use Veta\HomeworkBundle\Entity\Category;
 use Veta\HomeworkBundle\Entity\Tag;
 
 /**
- * Post
- *
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\PostRepository")
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
@@ -129,7 +127,7 @@ class Post
     private $likes;
 
     /**
-     * Constructor
+     * Post constructor.
      */
     public function __construct()
     {
@@ -140,8 +138,6 @@ class Post
 
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -150,8 +146,6 @@ class Post
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return Post
@@ -164,8 +158,6 @@ class Post
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -174,8 +166,6 @@ class Post
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      *
      * @return Post
@@ -188,8 +178,6 @@ class Post
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -198,8 +186,6 @@ class Post
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      *
      * @return Post
@@ -212,8 +198,6 @@ class Post
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()
@@ -222,8 +206,6 @@ class Post
     }
 
     /**
-     * Set dateCreate
-     *
      * @param \DateTime $dateCreate
      *
      * @return Post
@@ -236,8 +218,6 @@ class Post
     }
 
     /**
-     * Get dateCreate
-     *
      * @return \DateTime
      */
     public function getDateCreate()
@@ -246,8 +226,6 @@ class Post
     }
 
     /**
-     * Set status
-     *
      * @param boolean $status
      *
      * @return Post
@@ -260,8 +238,6 @@ class Post
     }
 
     /**
-     * Get status
-     *
      * @return boolean
      */
     public function getStatus()
@@ -270,8 +246,6 @@ class Post
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
     public function getSlug()
@@ -280,8 +254,6 @@ class Post
     }
 
     /**
-     * Add comment
-     *
      * @param Comment $comment
      *
      * @return Post
@@ -294,8 +266,6 @@ class Post
     }
 
     /**
-     * Remove comment
-     *
      * @param Comment $comment
      */
     public function removeComment(Comment $comment)
@@ -304,8 +274,6 @@ class Post
     }
 
     /**
-     * Get comments
-     *
      * @return Collection
      */
     public function getComments()
@@ -314,8 +282,6 @@ class Post
     }
 
     /**
-     * Set category
-     *
      * @param Category $category
      *
      * @return Post
@@ -328,8 +294,6 @@ class Post
     }
 
     /**
-     * Get category
-     *
      * @return Category
      */
     public function getCategory()
@@ -338,13 +302,11 @@ class Post
     }
 
     /**
-     * Add tag
-     *
      * @param Tag $tag
      *
      * @return Post
      */
-    public function addTag(Tag $tag)
+    public function addTag(Tag $tag = null)
     {
         $this->tags[] = $tag;
 
@@ -352,8 +314,6 @@ class Post
     }
 
     /**
-     * Remove tag
-     *
      * @param Tag $tag
      */
     public function removeTag(Tag $tag)
@@ -362,8 +322,6 @@ class Post
     }
 
     /**
-     * Get tags
-     *
      * @return Collection
      */
     public function getTags()
@@ -372,8 +330,6 @@ class Post
     }
 
     /**
-     * Set likes
-     *
      * @param integer $likes
      *
      * @return Post
@@ -386,8 +342,6 @@ class Post
     }
 
     /**
-     * Get likes
-     *
      * @return integer
      */
     public function getLikes()
