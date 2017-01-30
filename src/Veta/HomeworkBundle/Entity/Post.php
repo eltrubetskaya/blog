@@ -6,18 +6,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
+use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
 use Veta\HomeworkBundle\Entity\Comment;
 use Veta\HomeworkBundle\Entity\Category;
 use Veta\HomeworkBundle\Entity\Tag;
+use Veta\HomeworkBundle\Entity\Translation\PostTranslation;
 
 /**
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\PostRepository")
+ * @Gedmo\TranslationEntity(class="Veta\HomeworkBundle\Entity\Translation\PostTranslation")
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
  */
-class Post
+class Post extends AbstractPersonalTranslatable implements TranslatableInterface
 {
     /**
      * @var integer
@@ -29,6 +33,7 @@ class Post
     private $id;
 
     /**
+     * @Gedmo\Translatable
      * @var string
      * @ORM\Column(name="title", type="string", length=255, unique=true)
      *
@@ -43,6 +48,7 @@ class Post
     private $title;
 
     /**
+     * @Gedmo\Translatable
      * @var string
      * @ORM\Column(name="description", type="text", length=65535)
      *
@@ -57,6 +63,7 @@ class Post
     private $description;
 
     /**
+     * @Gedmo\Translatable
      * @var string
      * @ORM\Column(name="text", type="text", length=65535)
      *
@@ -127,10 +134,25 @@ class Post
     private $likes;
 
     /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Veta\HomeworkBundle\Entity\Translation\PostTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    protected $translations;
+
+    /**
      * Post constructor.
      */
     public function __construct()
     {
+        parent::__construct();
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->dateCreate = new \DateTime;
@@ -349,6 +371,13 @@ class Post
         return $this->likes;
     }
 
+    /**
+     * @param $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
     /**
      * @return string
      */

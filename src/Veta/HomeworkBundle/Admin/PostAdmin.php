@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\TranslationBundle\Filter\TranslationFieldFilter;
 use Veta\HomeworkBundle\Entity\Post;
 
 class PostAdmin extends AbstractAdmin
@@ -21,10 +22,10 @@ class PostAdmin extends AbstractAdmin
         $formMapper
             ->tab('Post')
             ->with('Content', ['class'=>'col-lg-8'])
-                ->add('title', null, [
+                ->add('title', 'text', [
                     'help' => 'Set the title'
                 ])
-                ->add('description', null, [
+                ->add('description', 'text', [
                     'help' => 'Set the short text'
                 ])
                 ->add('text', 'sonata_simple_formatter_type', [
@@ -87,7 +88,7 @@ class PostAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title')
+            ->addIdentifier('title', TranslationFieldFilter::class)
             ->add('dateCreate')
             ->add('category')
             ->add('status')
