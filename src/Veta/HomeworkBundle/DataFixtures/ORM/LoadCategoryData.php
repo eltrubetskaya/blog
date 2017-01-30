@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Veta\HomeworkBundle\Entity\Category;
+use Veta\HomeworkBundle\Entity\Translation\CategoryTranslation;
 
 class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -20,8 +21,10 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $parent = null;
         for ($i = 1; $i <= 5; $i++) {
             $category = new Category();
+            $title = $faker->unique()->name;
             $category
-                ->setTitle($faker->unique()->name)
+                ->setTitle($title . ' en')
+                ->addTranslation(new CategoryTranslation('uk', 'title', $title . ' uk'))
                 ->setStatus(true)
                 ->setParent($parent)
             ;

@@ -6,22 +6,24 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
+use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
 use Veta\HomeworkBundle\Entity\Post;
+use Veta\HomeworkBundle\Entity\Translation\CategoryTranslation;
 
 /**
- * Category
- *
  * @Gedmo\Tree(type="nested")
  *
  * use repository for handy tree functions
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\CategoryRepository")
+ * @Gedmo\TranslationEntity(class="Veta\HomeworkBundle\Entity\Translation\CategoryTranslation")
  *
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
  */
-class Category
+class Category extends AbstractPersonalTranslatable implements TranslatableInterface
 {
     /**
      * @var integer
@@ -33,6 +35,7 @@ class Category
     private $id;
 
     /**
+     * @Gedmo\Translatable
      * @var string
      * @ORM\Column(name="title", type="string", length=255, unique=true)
      *
@@ -70,6 +73,20 @@ class Category
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category", cascade={"persist","merge"})
      */
     private $posts;
+
+    /**
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Veta\HomeworkBundle\Entity\Translation\CategoryTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    protected $translations;
 
     /**
      * @Gedmo\TreeLeft
@@ -110,17 +127,16 @@ class Category
     private $children;
 
     /**
-     * Constructor
+     * Category constructor.
      */
     public function __construct()
     {
+        parent::__construct();
         $this->posts = new ArrayCollection();
     }
 
 
     /**
-     * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -129,8 +145,6 @@ class Category
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return Category
@@ -143,8 +157,6 @@ class Category
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -153,8 +165,6 @@ class Category
     }
 
     /**
-     * Set status
-     *
      * @param boolean $status
      *
      * @return Category
@@ -167,8 +177,6 @@ class Category
     }
 
     /**
-     * Get status
-     *
      * @return boolean
      */
     public function getStatus()
@@ -177,8 +185,6 @@ class Category
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
     public function getSlug()
@@ -187,8 +193,6 @@ class Category
     }
 
     /**
-     * Add post
-     *
      * @param Post $post
      *
      * @return Category
@@ -201,8 +205,6 @@ class Category
     }
 
     /**
-     * Remove post
-     *
      * @param Post $post
      */
     public function removePost(Post $post)
@@ -211,8 +213,6 @@ class Category
     }
 
     /**
-     * Get posts
-     *
      * @return Collection
      */
     public function getPosts()
@@ -242,6 +242,14 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @param $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     /**

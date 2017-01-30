@@ -6,6 +6,8 @@ use RedCode\TreeBundle\Admin\AbstractTreeAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\TranslationBundle\Filter\TranslationFieldFilter;
 use Veta\HomeworkBundle\Entity\Category;
 
 class CategoryAdmin extends AbstractTreeAdmin
@@ -19,19 +21,12 @@ class CategoryAdmin extends AbstractTreeAdmin
 
         $formMapper
             ->with('Content')
-            ->add('title')
+            ->add('title', 'text')
             ->add('status')
             ->add('parent', 'entity', [
                 'class' => 'Veta\HomeworkBundle\Entity\Category',
                 'label' => 'Parent',
-                'required'=>true,
-                'query_builder' => function ($er) use ($subjectId) {
-                    $qb = $er->createQueryBuilder('c');
-
-                    $qb
-                        ->orderBy('c.root, c.lft', 'ASC');
-                    return $qb;
-                }
+                'required' => true,
             ])
             ->end()
         ;
@@ -43,7 +38,7 @@ class CategoryAdmin extends AbstractTreeAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('title')
+            ->add('title', null, ['_sort_by' => 'title'], null)
             ->add('status')
         ;
     }
@@ -55,9 +50,12 @@ class CategoryAdmin extends AbstractTreeAdmin
     {
         $listMapper
             ->add('id')
-            ->addIdentifier('title')
+            ->addIdentifier('title', TranslationFieldFilter::class)
             ->add('status')
-            ->add('parent ')
+            ->add('parent', 'entity', [
+                'class' => 'Veta\HomeworkBundle\Entity\Category',
+                'label' => 'Parent',
+            ])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
@@ -65,6 +63,19 @@ class CategoryAdmin extends AbstractTreeAdmin
                     'delete' => [],
                 ]
             ])
+        ;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('title')
+            ->add('status')
+            ->add('parent')
+
         ;
     }
 
