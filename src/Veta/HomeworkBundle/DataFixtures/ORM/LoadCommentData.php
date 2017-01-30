@@ -22,8 +22,9 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
             $comment
                 ->setPost($this->getReference('post_'. rand(1, 10)))
                 ->setText($faker->text(200))
-            ;
+                ->setUser($this->getReference('user_'. rand(1, 5)))
 
+            ;
             $manager->persist($comment);
         }
 
@@ -35,6 +36,6 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 4;
+        return 5;
     }
 }

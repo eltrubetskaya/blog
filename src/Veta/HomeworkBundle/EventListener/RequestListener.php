@@ -37,9 +37,6 @@ class RequestListener
         $form = $this->form->createNamed('q', SearchType::class, [], [
             'method' => 'get',
             'action' => $this->router->generate('veta_homework_post_search'),
-            'attr' => [
-                'class' =>  'navbar-form navbar-right',
-            ]
         ])
         ;
         $this->twig->addGlobal('form_search', $form->createView());

@@ -27,6 +27,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
                 ->setStatus(true)
                 ->setDateCreate($faker->dateTime)
                 ->setLikes($faker->numberBetween(5, 25))
+                ->addTag($this->getReference('tag_'. rand(1, 10)))
             ;
 
             $manager->persist($post);
@@ -41,6 +42,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 }

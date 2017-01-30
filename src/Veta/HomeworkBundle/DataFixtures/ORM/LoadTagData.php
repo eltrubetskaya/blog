@@ -18,14 +18,14 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $tag = new Tag();
             $title = $faker->unique()->jobTitle;
             $tag->setTitle($title . ' en');
             $tag->addTranslation(new TagTranslation('uk', 'title', $title . ' uk'));
 
             $manager->persist($tag);
-            $this->getReference('post_'. rand(1, 10))->addTag($tag);
+            $this->addReference("tag_{$i}", $tag);
             $manager->flush();
         }
     }
@@ -35,6 +35,6 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 3;
+        return 2;
     }
 }
