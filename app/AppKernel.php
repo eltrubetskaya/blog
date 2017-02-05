@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Sonata\TranslationBundle\SonataTranslationBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
             new Veta\HomeworkBundle\VetaHomeworkBundle(),
         ];
 

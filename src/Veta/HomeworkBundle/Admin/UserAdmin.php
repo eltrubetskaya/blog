@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Veta\HomeworkBundle\Entity\User;
 
 class UserAdmin extends AbstractAdmin
@@ -60,6 +61,20 @@ class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('enabled')
             ->add('roles')
+        ;
+    }
+
+    /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('username')
+            ->add('email')
+            ->add('enabled')
+            ->add('roles')
+
         ;
     }
 

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
 use Veta\HomeworkBundle\Entity\Comment;
 use Veta\HomeworkBundle\Entity\Category;
@@ -18,6 +19,7 @@ use Veta\HomeworkBundle\Entity\Translation\PostTranslation;
 /**
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\PostRepository")
  * @Gedmo\TranslationEntity(class="Veta\HomeworkBundle\Entity\Translation\PostTranslation")
+ * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
  */
@@ -89,13 +91,13 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
 
     /**
      * @var boolean
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="enabled", type="boolean")
      *
      * @SymfonyConstraints\Type(
      *     type="boolean"
      * )
      */
-    private $status;
+    private $enabled;
 
     /**
      * @var string
@@ -146,6 +148,15 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * )
      */
     protected $translations;
+
+    const SERVER_PATH_TO_IMAGE_FOLDER = 'uploads/posts';
+
+    /**
+     * @var string $image
+     * @SymfonyConstraints\File( maxSize = "1024k", mimeTypesMessage = "Please upload a valid Image")
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
 
     /**
      * Post constructor.
@@ -248,13 +259,13 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
     }
 
     /**
-     * @param boolean $status
+     * @param boolean $enabled
      *
      * @return Post
      */
-    public function setStatus($status)
+    public function setEnabled($enabled)
     {
-        $this->status = $status;
+        $this->enabled = $enabled;
 
         return $this;
     }
@@ -262,9 +273,10 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
     /**
      * @return boolean
      */
-    public function getStatus()
+    public function getEnabled()
     {
-        return $this->status;
+        return $this->enabled;
+        ;
     }
 
     /**
@@ -378,11 +390,99 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
     {
         $this->locale = $locale;
     }
+
+    /**
+     * @param $image
+     */
+    public function setImage($image = null)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    public function getFullImagePath()
+    {
+        return null === $this->image ? null : $this->getUploadRootDir(). $this->image;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded documents should be saved
+        return self::SERVER_PATH_TO_IMAGE_FOLDER."/";
+    }
+
+    protected function getTmpUploadRootDir()
+    {
+        // the absolute directory path where uploaded documents should be saved
+        return self::SERVER_PATH_TO_IMAGE_FOLDER."/tmp/";
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function uploadImage()
+    {
+        // the file property can be empty if the field is not required
+        if ((null === $this->image)) {
+            if (!$this->id) {
+                return;
+            }
+            $this->setImage($_FILES['getImage']);
+        } else {
+            $fileName = uniqid().$this->image->getClientOriginalName();
+            if (!$this->id) {
+                $this->image->move($this->getTmpUploadRootDir(), $fileName);
+            } else {
+                $this->image->move($this->getUploadRootDir(), $fileName);
+            }
+            $this->setImage($fileName);
+        }
+    }
+
+    /**
+     * Lifecycle callback to upload the file to the server
+     */
+    public function lifecycleFileUpload()
+    {
+        $this->uploadImage();
+    }
+    /**
+     * @ORM\PostPersist()
+     */
+    public function moveImage()
+    {
+        if (null === $this->image) {
+            return;
+        }
+        if (!is_dir($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir());
+        }
+        copy($this->getTmpUploadRootDir().$this->image, $this->getFullImagePath());
+        unlink($this->getTmpUploadRootDir().$this->image);
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function removeImage()
+    {
+        unlink($this->getFullImagePath());
+        rmdir($this->getUploadRootDir());
     }
 }

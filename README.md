@@ -26,4 +26,5 @@ _in this project used:_
   * **KnpPaginatorBundle**
   * **SonataTranslationBundle**
   * **FOSUserBundle**
+  * **LiipImagineBundle**
   

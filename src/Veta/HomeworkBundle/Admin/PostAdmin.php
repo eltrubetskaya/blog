@@ -8,7 +8,11 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\TranslationBundle\Filter\TranslationFieldFilter;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Veta\HomeworkBundle\Entity\Post;
+use Veta\HomeworkBundle\VetaHomeworkBundle;
 
 class PostAdmin extends AbstractAdmin
 {
@@ -19,6 +23,23 @@ class PostAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        // get the current Image instance
+        $image = $this->getSubject();
+        $_FILES['getImage'] = $image->getImage();
+        // use $fileFieldOptions so we can add other options to the field
+        $fileFieldOptions = [
+            'required' => false,
+            'data_class' => null,
+        ];
+        if ($image && ($webPath = Post::SERVER_PATH_TO_IMAGE_FOLDER)) {
+            // get the container so the full path to the image can be set
+            $container = $this->getConfigurationPool()->getContainer();
+            $fullPath = $container->get('request_stack')->getCurrentRequest()->getBasePath().'/'.$webPath;
+
+            // add a 'help' option containing the preview's img tag
+            $fileFieldOptions['help'] = '<img src="'.$fullPath.'/'.$image->getImage().'" style="width: 200px" class="admin-preview" />';
+        }
+
         $formMapper
             ->tab('Post')
             ->with('Content', ['class'=>'col-lg-8'])
@@ -32,9 +53,10 @@ class PostAdmin extends AbstractAdmin
                     'format' => 'richhtml',
                     'ckeditor_context' => 'default',
                 ])
+                ->add('image', FileType::class, $fileFieldOptions)
             ->end()
             ->with('Status', ['class'=>'col-lg-4'])
-                ->add('status', null, ['label' => 'Enabled'])
+                ->add('enabled', null, ['label' => 'Enabled'])
                 ->add('dateCreate', 'sonata_type_datetime_picker', [
                     'dp_side_by_side' => true,
                     'dp_use_current'  => false,
@@ -76,7 +98,7 @@ class PostAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('title')
-            ->add('status')
+            ->add('enabled')
             ->add('tags')
             ->add('category')
         ;
@@ -91,7 +113,7 @@ class PostAdmin extends AbstractAdmin
             ->addIdentifier('title', TranslationFieldFilter::class)
             ->add('dateCreate')
             ->add('category')
-            ->add('status')
+            ->add('enabled')
             ->add('_action', 'actions', [
             'actions' => [
                 'show' => [],

@@ -147,32 +147,15 @@ sonata_admin:
         user_block: VetaHomeworkBundle:Admin:user_block.html.twig
     dashboard:
         blocks:
-            - { position: left, type: sonata.admin.block.admin_list, class: "col-lg-4" }
-            - { position: right, type: sonata.block.service.text, class: "col-lg-8", settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p>"} }
+            - { position: top, type: sonata.block.service.text, class: "col-md-12", settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p>"} }
     security:
-        handler: sonata.admin.security.handler.acl
+        handler: sonata.admin.security.handler.role
 
-        # acl security information
-        information:
-            GUEST:    [VIEW, LIST]
-            STAFF:    [EDIT, LIST, CREATE]
-            EDITOR:   [OPERATOR, EXPORT]
-            ADMIN:    [MASTER]
-
-        # permissions not related to an object instance and also to be available when objects do not exist
-        # the DELETE admin permission means the user is allowed to batch delete objects
-        admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
-
-        # permission related to the objects
-        object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
 
 sonata_block:
-    default_contexts: [cms]
+    default_contexts: [sonata_page_bundle]
     blocks:
         sonata.admin.block.search_result:
-            contexts: [admin]
-        # enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
             contexts: [admin]
         sonata.block.service.text: ~
         sonata.formatter.block.formatter: ~
@@ -239,3 +222,45 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: Veta\HomeworkBundle\Entity\User
+
+liip_imagine :
+    resolvers :
+        default :
+            web_path : ~
+
+    filter_sets :
+        cache : ~
+
+        # the name of the "filter set"
+        small_thumb :
+
+            # adjust the image quality to 75%
+            quality : 75
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [220, 180], mode : outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                background : { size : [224, 184], position : center, color : '#999' }
+
+         # the name of the "filter set"
+        big_thumb :
+
+            # adjust the image quality to 75%
+            quality : 75
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [400, 320], mode : outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                background : { size : [404, 324], position : center, color : '#999' }

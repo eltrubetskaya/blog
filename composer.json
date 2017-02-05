@@ -34,7 +34,8 @@
         "knplabs/knp-paginator-bundle": "^2.5",
         "bower-asset/bootstrap": "^3.3",
         "sonata-project/translation-bundle": "^2.1",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "liip/imagine-bundle": "^1.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
