@@ -3,6 +3,8 @@
 namespace Veta\HomeworkBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * TagRepository
@@ -12,4 +14,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
+    /**
+     * @param int $limit
+     * @return QueryBuilder
+     */
+    public function findLimitedQueryBuilder($limit = 100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->setMaxResults($limit)
+
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param int $limit
+     * @return Query
+     */
+    public function findLimitedQuery($limit = 100)
+    {
+        return $this->findLimitedQueryBuilder($limit)->getQuery();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function findLimited($limit = 100)
+    {
+        return $this->findLimitedQuery($limit)->getResult();
+    }
 }

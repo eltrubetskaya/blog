@@ -3,7 +3,6 @@ namespace Veta\HomeworkBundle\Controller;
 
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,12 +41,13 @@ class PostController extends Controller
             }
         }
 
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
-
+        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
+        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $posts = $this->sortPost($request, $query);
         return $this->render('VetaHomeworkBundle:Post:index.html.twig', [
             'posts' => $posts,
             'postsSidebarModule' => $postsSidebarModule,
+            'tagsSidebarModule' => $tagsSidebarModule,
 
         ]);
     }
@@ -111,21 +111,21 @@ class PostController extends Controller
         $breadcrumbs->addRouteItem("Post", "veta_homework_post_index");
         $breadcrumbs->addRouteItem($post->getTitle(), "veta_homework_post_view", ['slug' => $post->getSlug()]);
 
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
-
+        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
+        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $comment = new Comment();
         $comment->setPost($post);
 
         $form = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('veta_homework_comment_create'),
             'method' => 'POST',
-        ])
-        ;
+        ]);
 
         return $this->render('VetaHomeworkBundle:Post:view.html.twig', [
             'form' => $form->createView(),
             'post' => $post,
             'postsSidebarModule' => $postsSidebarModule,
+            'tagsSidebarModule' => $tagsSidebarModule,
 
         ]);
     }
@@ -145,11 +145,13 @@ class PostController extends Controller
         if (!$query) {
             $this->addFlash('search', "Search for text: \"$q\" no posts ... ");
         }
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
+        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
+        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $posts = $this->sortPost($request, $query);
         return $this->render('VetaHomeworkBundle:Post:search.html.twig', [
             'posts' => $posts,
             'postsSidebarModule' => $postsSidebarModule,
+            'tagsSidebarModule' => $tagsSidebarModule,
 
         ]);
     }

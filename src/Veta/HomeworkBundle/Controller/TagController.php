@@ -28,8 +28,8 @@ class TagController extends Controller
 
         $breadcrumbs->addRouteItem($tag->getTitle(), "veta_homework_tag_index", ['slug' => $tag->getSlug()]);
 
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
-
+        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
+        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $query =$tag->getPosts();
         $paginator  = $this->get('knp_paginator');
         $posts = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
@@ -39,6 +39,7 @@ class TagController extends Controller
             'postsSidebarModule' => $postsSidebarModule,
             'posts' => $posts,
             'tag' => $tag,
+            'tagsSidebarModule' => $tagsSidebarModule,
 
         ]);
     }

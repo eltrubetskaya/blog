@@ -16,13 +16,13 @@ class SiteController extends Controller
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addRouteItem("Home", "veta_homework_homepage");
-
-        $posts = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($limit = 5);
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent();
-
+        $posts = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.homepage.posts_per_page'));
+        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
+        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         return $this->render('VetaHomeworkBundle:Site:index.html.twig', [
             'posts' => $posts,
             'postsSidebarModule' => $postsSidebarModule,
+            'tagsSidebarModule' => $tagsSidebarModule,
 
         ]);
     }

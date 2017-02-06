@@ -1,12 +1,12 @@
-parameters:
-    security.acl.permission.map.class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap
-
 services:
+
     veta_homework.admin.post_admin:
-          class: Veta\HomeworkBundle\Admin\PostAdmin
-          arguments: [~,Veta\HomeworkBundle\Entity\Post, ~]
-          tags:
-              - { name: sonata.admin, manager_type: orm, group: "Content", label: "Posts", icon: "<i class=\"fa fa-th\" aria-hidden=\"true\"></i>" }
+        class: Veta\HomeworkBundle\Admin\PostAdmin
+        arguments: [~,Veta\HomeworkBundle\Entity\Post, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Posts", icon: "<i class=\"fa fa-th\" aria-hidden=\"true\"></i>" }
+        calls:
+            - [ setTranslationDomain, [ 'VetaHomeworkBundle' ] ]
 
     veta_homework.admin.category_admin:
         class: Veta\HomeworkBundle\Admin\CategoryAdmin
@@ -18,7 +18,7 @@ services:
             - 'VetaHomeworkBundle:CategoryAdmin'
             - 'title'
         calls:
-            - [ setTranslationDomain, [VetaHomeworkBundle]]
+            - [ setTranslationDomain, [ 'VetaHomeworkBundle' ] ]
 
     veta_homework.admin.tag_admin:
         class: Veta\HomeworkBundle\Admin\TagAdmin
@@ -29,7 +29,7 @@ services:
             - Veta\HomeworkBundle\Entity\Tag
             - 'SonataAdminBundle:CRUD'
         calls:
-            - [ setTranslationDomain, [VetaHomeworkBundle]]
+            - [ setTranslationDomain, [ 'VetaHomeworkBundle ' ] ]
 
     veta_homework.admin.user_admin:
         class: Veta\HomeworkBundle\Admin\UserAdmin
@@ -40,7 +40,7 @@ services:
             - Veta\HomeworkBundle\Entity\User
             - 'SonataAdminBundle:CRUD'
         calls:
-            - [ setTranslationDomain, [VetaHomeworkBundle]]
+            - [ setTranslationDomain, [ 'VetaHomeworkBundle' ] ]
 
     veta_homework.admin.comment_admin:
         class: Veta\HomeworkBundle\Admin\CommentAdmin
@@ -51,7 +51,7 @@ services:
             - Veta\HomeworkBundle\Entity\Comment
             - 'SonataAdminBundle:CRUD'
         calls:
-            - [ setTranslationDomain, [VetaHomeworkBundle]]
+            - [ setTranslationDomain, [ 'VetaHomeworkBundle' ] ]
 
     veta_homework.menu.menu_builder:
         class: Veta\HomeworkBundle\Menu\MenuBuilder

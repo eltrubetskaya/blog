@@ -22,6 +22,10 @@ class VetaHomeworkExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('veta_homework.sidebar.tags_limit', $config['sidebar']['tags_limit']);
+        $container->setParameter('veta_homework.sidebar.posts_limit', $config['sidebar']['posts_limit']);
+        $container->setParameter('veta_homework.homepage.posts_per_page', $config['homepage']['posts_per_page']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

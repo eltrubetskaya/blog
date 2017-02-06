@@ -6,6 +6,7 @@ search: Пошук
 blog: Блог
 the_list_categories: Список Категорій
 the_list_posts: Список Постів
+the_tags: Список Тегів
 the_homework_template_of_creating_a_blog: Шаблон створення блогу.
 bundle: Блог > VetaHomeworkBundle:%action%
 posts_tag: Пости тега

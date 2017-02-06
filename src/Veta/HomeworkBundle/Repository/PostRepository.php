@@ -21,6 +21,7 @@ class PostRepository extends EntityRepository
     public function findMostRecentQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
+            ->where("u.enabled = '1'")
             ->orderBy('u.dateCreate', 'DESC')
             ->setMaxResults($limit)
 
@@ -54,6 +55,7 @@ class PostRepository extends EntityRepository
     public function findMostOldQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
+            ->where("u.enabled = '1'")
             ->orderBy('u.dateCreate', 'ASC')
             ->setMaxResults($limit)
 
@@ -87,6 +89,7 @@ class PostRepository extends EntityRepository
     public function findOrderByTitleUpQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
+            ->where("u.enabled = '1'")
             ->orderBy('u.title', 'DESC')
             ->setMaxResults($limit)
 
@@ -120,6 +123,7 @@ class PostRepository extends EntityRepository
     public function findOrderByTitleDownQueryBuilder($limit = 100)
     {
         $qb = $this->createQueryBuilder('u')
+            ->where("u.enabled = '1'")
             ->orderBy('u.title', 'ASC')
             ->setMaxResults($limit)
 
@@ -155,7 +159,7 @@ class PostRepository extends EntityRepository
     public function findQQueryBuilder($q, $search, $limit=100)
     {
         $qb = $this->createQueryBuilder('u')
-            ->where("u.status = '1'")
+            ->where("u.enabled = '1'")
             ->andWhere("u.title like '%$q%' or u.text like '%$q%'  or u.description like '%$q%'")
         ;
         foreach ($search as $word) {
