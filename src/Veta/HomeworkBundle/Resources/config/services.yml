@@ -76,3 +76,11 @@ services:
         arguments: ["@twig", "@form.factory", "@router"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    veta_homework.sitemap.post_subscriber:
+        class:     Veta\HomeworkBundle\EventListener\SitemapSubscriber
+        arguments:
+            - "@router"
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: "kernel.event_subscriber", priority: 100 }

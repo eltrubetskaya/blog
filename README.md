@@ -14,6 +14,8 @@ GeekHub HomeWork - Blog (Symfony)
 
 `$ bin/console fos:user:create admin --super-admin`
 
+`$ bin/console presta:sitemaps:dump`
+
 _in this project used:_
 
   * **SonataAdminBundle**
@@ -27,4 +29,5 @@ _in this project used:_
   * **SonataTranslationBundle**
   * **FOSUserBundle**
   * **LiipImagineBundle**
+  * **PrestaSitemapBundle** 
   
