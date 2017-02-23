@@ -84,3 +84,7 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: "kernel.event_subscriber", priority: 100 }
+
+    veta_homework.security.core.user:
+        class: Veta\HomeworkBundle\Security\Core\User\OAuthUserProvider
+        arguments: ['@fos_user.user_manager', { google: google_id, facebook: facebook_id }]

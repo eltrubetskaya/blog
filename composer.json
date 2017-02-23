@@ -36,7 +36,11 @@
         "sonata-project/translation-bundle": "^2.1",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "liip/imagine-bundle": "^1.7",
-        "presta/sitemap-bundle": "^1.5"
+        "presta/sitemap-bundle": "^1.5",
+        "friendsofsymfony/jsrouting-bundle": "^1.6",
+        "hwi/oauth-bundle": "^0.5.3",
+        "nelmio/api-doc-bundle": "^2.13",
+        "nelmio/cors-bundle": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

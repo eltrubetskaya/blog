@@ -250,3 +250,46 @@ liip_imagine :
 presta_sitemap:
    route_annotation_listener: false
    items_by_set: 50000
+
+fos_js_routing:
+    cache_control:
+        # All are optional, defaults shown
+        public: false   # can be true (public) or false (private)
+        maxage: null    # integer value, e.g. 300
+        smaxage: null   # integer value, e.g. 300
+        expires: null   # anything that can be fed to "new \DateTime($expires)", e.g. "5 minutes"
+        vary: []        # string or array, e.g. "Cookie" or [ Cookie, Accept ]
+
+hwi_oauth:
+    connect:
+        account_connector: veta_homework.security.core.user
+    firewall_names: [ main ]
+    fosub:
+        username_iterations: 30
+        properties:
+            google:    google_id
+            facebook:  facebook_id
+    resource_owners:
+        google:
+            type:                google
+            client_id:           195876328566-kua83j0sau3d1j6r8c0vi8gs436usglo.apps.googleusercontent.com
+            client_secret:       WGv9vCFNYomvaMsU6YwJuygz
+            scope:              "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            paths:
+                email: email
+            options:
+                access_type:     offline
+                display: popup #dialog is optimized for popup window
+
+        facebook:
+            type:          facebook
+            client_id:     402021680135656
+            client_secret: db9700a9a6c88bd32eed7b5c14ef5e20
+            scope:         "email, public_profile"
+#            infos_url:     "https://graph.facebook.com/me?fields=id,name,email,picture.type(large)"
+            paths:
+                email: email
+                id: id
+            options:
+                display: popup #dialog is optimized for popup window
+                csrf: true
