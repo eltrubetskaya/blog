@@ -16,6 +16,10 @@ GeekHub HomeWork - Blog (Symfony)
 
 `$ bin/console presta:sitemaps:dump`
 
+`$ bin/console fos:js-routing:dump`
+
+`$ bower install bootstrap-social`
+
 _in this project used:_
 
   * **SonataAdminBundle**
@@ -30,4 +34,6 @@ _in this project used:_
   * **FOSUserBundle**
   * **LiipImagineBundle**
   * **PrestaSitemapBundle** 
+  * **FOSJsRoutingBundle**
+  * **HWIOAuthBundle**
   

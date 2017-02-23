@@ -1,12 +1,16 @@
 veta_homework_setup:
     path:      /
     defaults: { _controller: VetaHomeworkBundle:Site:setup }
+    options:
+        expose: false
 
 veta_homework_homepage:
     path:      /{_locale}/
     defaults: { _controller: VetaHomeworkBundle:Site:index }
     requirements:
         _locale: en|uk
+    options:
+        expose: true
 
 veta_homework_post_index:
     path:     /{_locale}/post
@@ -14,6 +18,8 @@ veta_homework_post_index:
     methods: [GET]
     requirements:
         _locale: en|uk
+    options:
+        expose: true
 
 
 veta_homework_post_search:
@@ -22,11 +28,15 @@ veta_homework_post_search:
     methods: [GET]
     requirements:
         _locale: en|uk
+    options:
+        expose: false
 
 veta_homework_post_likes:
     path:     /post/like
     defaults: { _controller: VetaHomeworkBundle:Post:likes }
     methods: [POST]
+    options:
+        expose: false
 
 veta_homework_post_view:
     path:     /{_locale}/post/{slug}
@@ -35,11 +45,15 @@ veta_homework_post_view:
     requirements:
         slug: '[\w\-]+'
         _locale: en|uk
+    options:
+        expose: true
 
 veta_homework_comment_create:
     path:     /comment
     defaults: { _controller: VetaHomeworkBundle:Comment:create }
     methods: [POST]
+    options:
+        expose: false
 
 veta_homework_category_index:
     path:    /{_locale}/category/{slug}
@@ -48,6 +62,8 @@ veta_homework_category_index:
     requirements:
         slug: '[\w\-]+'
         _locale: en|uk
+    options:
+        expose: true
 
 veta_homework_tag_index:
     path:     /{_locale}/tag/{slug}
@@ -56,3 +72,5 @@ veta_homework_tag_index:
     requirements:
         slug: '[\w\-]+'
         _locale: en|uk
+    options:
+        expose: true
