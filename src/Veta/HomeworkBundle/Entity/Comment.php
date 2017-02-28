@@ -5,11 +5,13 @@ namespace Veta\HomeworkBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
+use JMS\Serializer\Annotation as Serializer;
 use Veta\HomeworkBundle\Entity\Post;
 use Veta\HomeworkBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\CommentRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Comment
 {
@@ -33,6 +35,8 @@ class Comment
      * @SymfonyConstraints\Type(
      *     type="string"
      * )
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     private $text;
 
@@ -43,6 +47,8 @@ class Comment
      * @Gedmo\Timestampable(on="create")
      *
      * @SymfonyConstraints\DateTime()
+     * @Serializer\Type("DateTime")
+     * @Serializer\Expose()
      */
     private $dateCreate;
 
@@ -57,6 +63,8 @@ class Comment
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments", cascade={"persist","merge"})
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     private $user;
 

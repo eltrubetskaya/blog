@@ -45,3 +45,11 @@ facebook_login:
 
 google_login:
     path: /login_google
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
+api_blog:
+    resource: "@ApiBlogBundle/Resources/config/routing.yml"
+    prefix:   /

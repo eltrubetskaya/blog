@@ -1,0 +1,5 @@
+services:
+    api_blog.event_listener.serializer_subscriber:
+        class: Api\BlogBundle\EventListener\SerializerSubscriber
+        tags:
+            - { name: jms_serializer.event_subscriber }

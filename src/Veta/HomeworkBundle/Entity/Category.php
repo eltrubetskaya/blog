@@ -10,6 +10,7 @@ use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
+use JMS\Serializer\Annotation as Serializer;
 use Veta\HomeworkBundle\Entity\Post;
 use Veta\HomeworkBundle\Entity\Translation\CategoryTranslation;
 
@@ -19,9 +20,9 @@ use Veta\HomeworkBundle\Entity\Translation\CategoryTranslation;
  * use repository for handy tree functions
  * @ORM\Entity(repositoryClass="Veta\HomeworkBundle\Repository\CategoryRepository")
  * @Gedmo\TranslationEntity(class="Veta\HomeworkBundle\Entity\Translation\CategoryTranslation")
- *
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Category extends AbstractPersonalTranslatable implements TranslatableInterface
 {
@@ -46,6 +47,8 @@ class Category extends AbstractPersonalTranslatable implements TranslatableInter
      * @SymfonyConstraints\Type(
      *     type="string"
      * )
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     private $title;
 
@@ -56,6 +59,8 @@ class Category extends AbstractPersonalTranslatable implements TranslatableInter
      * @SymfonyConstraints\Type(
      *     type="boolean"
      * )
+     * @Serializer\Type("boolean")
+     * @Serializer\Expose()
      */
     private $status;
 
@@ -64,6 +69,7 @@ class Category extends AbstractPersonalTranslatable implements TranslatableInter
      * @ORM\Column(name="slug", type="string", length=255, unique=true, nullable=true)
      *
      * @Gedmo\Slug(fields={"title"})
+     * @Serializer\Type("string")
      */
     private $slug;
 
@@ -76,6 +82,8 @@ class Category extends AbstractPersonalTranslatable implements TranslatableInter
 
     /**
      * @Gedmo\Locale
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     protected $locale;
 
@@ -250,6 +258,16 @@ class Category extends AbstractPersonalTranslatable implements TranslatableInter
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * @return Category
+     */
+    public function unsetTranslations()
+    {
+        $this->translations = null;
+
+        return $this;
     }
 
     /**

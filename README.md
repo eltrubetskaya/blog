@@ -36,4 +36,7 @@ _in this project used:_
   * **PrestaSitemapBundle** 
   * **FOSJsRoutingBundle**
   * **HWIOAuthBundle**
+  * **JMSSerializerBundle**
+  * **FOSRestBundle**
+  * **NelmioApiDocBundle**
   

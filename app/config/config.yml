@@ -293,3 +293,36 @@ hwi_oauth:
             options:
                 display: popup #dialog is optimized for popup window
                 csrf: true
+
+nelmio_api_doc:
+    name: BlogHomework API documentation
+
+    sandbox:
+        accept_type: application/json
+        body_format:
+            formats: [ json ]
+        request_format:
+            formats:
+                json: application/json
+            default_format: json
+
+fos_rest:
+    body_listener:
+      service: api_blog.event_listener.serializer_subscriber
+    routing_loader:
+        default_format: json
+    versioning: true
+    view:
+        jsonp_handler: ~
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+        view_response_listener: 'force'
+        formats:
+            json: true
+
+jms_serializer:
+    metadata:
+        debug: true
+        auto_detection: true

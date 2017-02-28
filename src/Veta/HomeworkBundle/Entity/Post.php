@@ -11,6 +11,7 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as SymfonyConstraints;
+use JMS\Serializer\Annotation as Serializer;
 use Veta\HomeworkBundle\Entity\Comment;
 use Veta\HomeworkBundle\Entity\Category;
 use Veta\HomeworkBundle\Entity\Tag;
@@ -22,6 +23,7 @@ use Veta\HomeworkBundle\Entity\Translation\PostTranslation;
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("title")
  * @UniqueEntity("slug")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Post extends AbstractPersonalTranslatable implements TranslatableInterface
 {
@@ -46,6 +48,8 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @SymfonyConstraints\Type(
      *     type="string"
      * )
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     private $title;
 
@@ -61,6 +65,8 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @SymfonyConstraints\Type(
      *     type="string"
      * )
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     private $description;
 
@@ -76,16 +82,18 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @SymfonyConstraints\Type(
      *     type="string"
      * )
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     private $text;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
-     *
      * @Gedmo\Timestampable(on="create")
-     *
      * @SymfonyConstraints\DateTime()
+     * @Serializer\Type("DateTime")
+     * @Serializer\Expose()
      */
     private $dateCreate;
 
@@ -96,6 +104,8 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @SymfonyConstraints\Type(
      *     type="boolean"
      * )
+     * @Serializer\Type("boolean")
+     * @Serializer\Expose()
      */
     private $enabled;
 
@@ -104,6 +114,7 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @ORM\Column(name="slug", type="string", length=255, unique=true, nullable=true)
      *
      * @Gedmo\Slug(fields={"title"})
+     * @Serializer\Type("string")
      */
     private $slug;
 
@@ -111,6 +122,8 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist","merge"})
+     * @Serializer\Type("ArrayCollection<Veta\HomeworkBundle\Entity\Comment>")
+     * @Serializer\Expose()
      */
     private $comments;
 
@@ -118,6 +131,8 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts", cascade={"persist","merge"})
+     * @Serializer\Type("Veta\HomeworkBundle\Entity\Category")
+     * @Serializer\Expose()
      */
     private $category;
 
@@ -125,18 +140,23 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist","detach","merge"})
+     * @Serializer\Type("ArrayCollection<Veta\HomeworkBundle\Entity\Tag>")
      */
     private $tags;
 
     /**
      * @var integer
      * @ORM\Column(name="likes", type="integer", nullable=true)
+     * @Serializer\Type("integer")
+     * @Serializer\Expose()
      *
      */
     private $likes;
 
     /**
      * @Gedmo\Locale
+     * @Serializer\Type("string")
+     * @Serializer\Expose()
      */
     protected $locale;
 
@@ -146,6 +166,7 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      *   mappedBy="object",
      *   cascade={"persist", "remove"}
      * )
+     *
      */
     protected $translations;
 
@@ -155,6 +176,7 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
      * @var string $image
      * @SymfonyConstraints\File( maxSize = "1024k", mimeTypesMessage = "Please upload a valid Image")
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Serializer\Type("string")
      */
     private $image;
 
@@ -389,6 +411,16 @@ class Post extends AbstractPersonalTranslatable implements TranslatableInterface
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * @return Post
+     */
+    public function unsetTranslations()
+    {
+        $this->translations = null;
+
+        return $this;
     }
 
     /**

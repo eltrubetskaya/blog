@@ -1,0 +1,3 @@
+api_blog_post:
+    type:     rest
+    resource: Api\BlogBundle\Controller\PostController

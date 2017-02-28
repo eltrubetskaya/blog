@@ -34,7 +34,11 @@ class AppKernel extends Kernel
             new Presta\SitemapBundle\PrestaSitemapBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             new Veta\HomeworkBundle\VetaHomeworkBundle(),
+            new Api\BlogBundle\ApiBlogBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
