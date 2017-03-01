@@ -296,7 +296,10 @@ hwi_oauth:
 
 nelmio_api_doc:
     name: BlogHomework API documentation
-
+    exclude_sections:     []
+    default_sections_opened:  true
+    motd:
+        template:             'NelmioApiDocBundle::Components/motd.html.twig'
     sandbox:
         accept_type: application/json
         body_format:
@@ -305,6 +308,9 @@ nelmio_api_doc:
             formats:
                 json: application/json
             default_format: json
+    cache:
+        enabled:              false
+        file:                 '%kernel.cache_dir%/api-doc.cache'
 
 fos_rest:
     body_listener:

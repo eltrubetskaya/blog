@@ -16,6 +16,8 @@ class PostController extends FOSRestController
 {
     /**
      * @ApiDoc(
+     *     resource=true,
+     *     resourceDescription="Operations on Post.",
      *     method="get",
      *     description="Retrieve Post list.",
      *     requirements={
@@ -43,16 +45,14 @@ class PostController extends FOSRestController
      *      }
      *  )
      * @Get("{_locale}/post", name="index", defaults={"_locale":"en"}, requirements={"_locale": "uk|en"})
-     * @ViewAnnotation(
-     *     statusCode="200"
-     * )
+     * @ViewAnnotation()
      * @return Response
      */
     public function getPostsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository('VetaHomeworkBundle:Post')->findAll();
-        foreach ($posts as $post){
+        foreach ($posts as $post) {
             $post->setLocale($request->get('_locale'));
             $em->refresh($post);
 
@@ -77,6 +77,8 @@ class PostController extends FOSRestController
 
     /**
      * @ApiDoc(
+     *     resource=false,
+     *     resourceDescription="Operations on Post.",
      *     method="get",
      *     description="Retrieve view post.",
      *     requirements={
@@ -104,9 +106,7 @@ class PostController extends FOSRestController
      *      }
      *  )
      * @Get("{_locale}/post/{slug}", name="view", defaults={"_locale":"en"}, requirements={"slug": "[\w\-]+", "_locale": "uk|en"})
-     * @ViewAnnotation(
-     *     statusCode="200"
-     * )
+     * @ViewAnnotation()
      * @return Response
      */
     public function getPostAction(Request $request, Post $post)

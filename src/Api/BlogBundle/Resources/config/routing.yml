@@ -1,3 +1,7 @@
 api_blog_post:
     type:     rest
     resource: Api\BlogBundle\Controller\PostController
+
+api_blog_category:
+    type:     rest
+    resource: Api\BlogBundle\Controller\CategoryController
