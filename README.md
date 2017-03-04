@@ -39,4 +39,4 @@ _in this project used:_
   * **JMSSerializerBundle**
   * **FOSRestBundle**
   * **NelmioApiDocBundle**
-  
+  * **FOSElasticaBundle**  

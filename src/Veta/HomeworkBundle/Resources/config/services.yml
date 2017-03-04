@@ -73,7 +73,7 @@ services:
 
     veta_homework.event_listener.request_listener:
         class: Veta\HomeworkBundle\EventListener\RequestListener
-        arguments: ["@twig", "@form.factory", "@router"]
+        arguments: ["@twig", "@form.factory", "@router", "@doctrine.orm.entity_manager", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 

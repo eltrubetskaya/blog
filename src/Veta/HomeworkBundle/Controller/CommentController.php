@@ -14,7 +14,7 @@ use Veta\HomeworkBundle\Form\Type\CommentType;
 class CommentController extends Controller
 {
     /**
-     * @Route("/comment", name="create")
+     * @Route("/{_locale}/comment", name="create")
      * @Method("POST")
      *
      * @param Request $request

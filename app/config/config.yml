@@ -225,7 +225,7 @@ fos_user:
 
 veta_homework:
     sidebar:
-        posts_limit: 5
+        posts_limit: 10
     homepage:
         posts_per_page: 7
 
@@ -332,3 +332,25 @@ jms_serializer:
     metadata:
         debug: true
         auto_detection: true
+
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        blog:
+            types:
+                post:
+                    properties:
+                        title: ~
+                        description: ~
+                        text: ~
+                    persistence:
+                        driver: orm
+                        model: Veta\HomeworkBundle\Entity\Post
+                        listener:
+                            insert: true
+                            update: false
+                            delete: true
+                        provider: ~
+                        finder: ~
+            index_name: blog_%kernel.environment%

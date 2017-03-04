@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
             new Veta\HomeworkBundle\VetaHomeworkBundle(),
             new Api\BlogBundle\ApiBlogBundle(),
         ];

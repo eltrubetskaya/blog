@@ -12,7 +12,7 @@ use Veta\HomeworkBundle\Entity\Category;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/category/{slug}", name="views", requirements={"slug": "[\w\-]+"})
+     * @Route("/{_locale}/category/{slug}", name="views", requirements={"slug": "[\w\-]+"})
      * @Method("GET")
      *
      * @param Request $request
@@ -35,16 +35,12 @@ class CategoryController extends Controller
         }
         $breadcrumbs->addRouteItem($category->getTitle(), "veta_homework_category_index", ['slug' => $category->getSlug()]);
 
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
-        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $query = $category->getPosts();
         $paginator  = $this->get('knp_paginator');
         $posts = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
 
         return $this->render('VetaHomeworkBundle:Category:index.html.twig', [
             'categories' => $categories,
-            'postsSidebarModule' => $postsSidebarModule,
-            'tagsSidebarModule' => $tagsSidebarModule,
             'posts' => $posts,
 
         ]);

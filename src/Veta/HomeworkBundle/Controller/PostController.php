@@ -15,7 +15,7 @@ use Veta\HomeworkBundle\Form\Type\CommentType;
 class PostController extends Controller
 {
     /**
-     * @Route("/post", name="index")
+     * @Route("/{_locale}/post", name="index")
      * @Method("GET")
      *
      * @param Request $request
@@ -41,19 +41,15 @@ class PostController extends Controller
             }
         }
 
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
-        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $posts = $this->sortPost($request, $query);
         return $this->render('VetaHomeworkBundle:Post:index.html.twig', [
             'posts' => $posts,
-            'postsSidebarModule' => $postsSidebarModule,
-            'tagsSidebarModule' => $tagsSidebarModule,
 
         ]);
     }
 
     /**
-     * @Route("/post/like", name="likes")
+     * @Route("/{_locale}/post/like", name="likes")
      * @Method("POST")
      *
      * @param Request $request
@@ -96,7 +92,7 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/post/{slug}", name="views", requirements={"slug": "[\w\-]+"})
+     * @Route("/{_locale}/post/{slug}", name="views", requirements={"slug": "[\w\-]+"})
      * @Method("GET")
      *
      * @param Post $post
@@ -111,8 +107,6 @@ class PostController extends Controller
         $breadcrumbs->addRouteItem("Post", "veta_homework_post_index");
         $breadcrumbs->addRouteItem($post->getTitle(), "veta_homework_post_view", ['slug' => $post->getSlug()]);
 
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
-        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
         $comment = new Comment();
         $comment->setPost($post);
 
@@ -124,14 +118,11 @@ class PostController extends Controller
         return $this->render('VetaHomeworkBundle:Post:view.html.twig', [
             'form' => $form->createView(),
             'post' => $post,
-            'postsSidebarModule' => $postsSidebarModule,
-            'tagsSidebarModule' => $tagsSidebarModule,
-
         ]);
     }
 
     /**
-     * @Route("/post/search", name="search")
+     * @Route("/{_locale}/post/search", name="search")
      * @Method("GET")
      *
      * @param Request $request
@@ -140,19 +131,17 @@ class PostController extends Controller
     public function searchAction(Request $request)
     {
         $q = $request->query->get('q');
-        $search = explode(" ", $q);
-        $query = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findQ($q, $search, 10);
+
+        $finder = $this->container->get('fos_elastica.finder.blog.post');
+        $query = $finder->createPaginatorAdapter($q);
+
         if (!$query) {
             $this->addFlash('search', "Search for text: \"$q\" no posts ... ");
         }
-        $postsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Post')->findMostRecent($this->getParameter('veta_homework.sidebar.posts_limit'));
-        $tagsSidebarModule = $this->getDoctrine()->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->getParameter('veta_homework.sidebar.tags_limit'));
+
         $posts = $this->sortPost($request, $query);
         return $this->render('VetaHomeworkBundle:Post:search.html.twig', [
             'posts' => $posts,
-            'postsSidebarModule' => $postsSidebarModule,
-            'tagsSidebarModule' => $tagsSidebarModule,
-
         ]);
     }
 }
