@@ -88,3 +88,7 @@ services:
     veta_homework.security.core.user:
         class: Veta\HomeworkBundle\Security\Core\User\OAuthUserProvider
         arguments: ['@fos_user.user_manager', { google: google_id, facebook: facebook_id }]
+
+    veta_homework.services.email_manager:
+        class: Veta\HomeworkBundle\Services\EmailManager
+        arguments: ["@mailer", "@templating", "@doctrine.orm.entity_manager", "@service_container"]

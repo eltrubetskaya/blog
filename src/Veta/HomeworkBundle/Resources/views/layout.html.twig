@@ -1,5 +1,13 @@
 {% extends "VetaHomeworkBundle::base.html.twig" %}
-
+{% block stylesheets %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-social/bootstrap-social.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="http://bootstrap-3.ru/examples/signin/signin.css">
+    <link href="http://bootstrap-3.ru/examples/blog/blog.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+{% endblock %}
 {% block title %}{% endblock %}
 
 {% block body %}
@@ -56,4 +64,13 @@
             </p>
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('src/js/my_js.js') }}"></script>
+    <script src="{{ asset('src/js/jquery.session.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}

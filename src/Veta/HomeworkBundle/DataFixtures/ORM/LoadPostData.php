@@ -32,7 +32,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
                 ->setText($text . 'en')
                 ->addTranslation(new PostTranslation('uk', 'text', $text . ' uk'))
                 ->setEnabled(true)
-                ->setDateCreate($faker->dateTime)
+                ->setDateCreate($faker->dateTimeBetween('-5 day', 'now'))
                 ->setLikes($faker->numberBetween(5, 25))
                 ->addTag($this->getReference('tag_'. rand(1, 10)))
             ;

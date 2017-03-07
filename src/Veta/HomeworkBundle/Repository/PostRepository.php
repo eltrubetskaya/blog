@@ -198,4 +198,39 @@ class PostRepository extends EntityRepository
     {
         return $this->findQQuery($q, $search, $limit)->getResult();
     }
+
+    /**
+     * @param int $limit
+     * @return QueryBuilder
+     */
+    public function findMostLikesQueryBuilder($limit = 100)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->where("u.dateCreate > :date")
+            ->orderBy('u.likes', 'DESC')
+            ->setParameter('date', new \DateTime('-1 day'))
+            ->setMaxResults($limit)
+
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param int $limit
+     * @return Query
+     */
+    public function findMostLikesQuery($limit = 100)
+    {
+        return $this->findMostLikesQueryBuilder($limit)->getQuery();
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function findMostLikes($limit = 100)
+    {
+        return $this->findMostLikesQuery($limit)->getResult();
+    }
 }

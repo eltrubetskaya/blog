@@ -49,7 +49,7 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/post/like", name="likes")
+     * @Route("/post/like", name="likes")
      * @Method("POST")
      *
      * @param Request $request

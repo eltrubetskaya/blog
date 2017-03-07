@@ -1,0 +1,23 @@
+{% extends "VetaHomeworkBundle::base.html.twig" %}
+
+{% block title %}Distribution!{% endblock %}
+
+{% block body %}
+    {% block main %}
+        <h1> Hi, {{ user.username }}! </h1>
+        <h3> Distribution 5 popular posts for today </h3>
+        <hr>
+        {% for post in posts %}
+            <div class="blog-post">
+                <h2 class="blog-post-title"><a title="{{ post.title }}" style="color: #333;text-decoration: none;cursor: pointer" href="{{ url('veta_homework_post_view', {'slug': post.slug, '_locale':'en'}) }}">{{ post.title }}</a></h2>
+                <p class="blog-post-meta">
+                    <small>
+                        <date>{{ post.dateCreate|date('Y-m-d H:m:s') }}</date>
+                    </small>
+                </p>
+                {{ post.description|raw }}
+            </div>
+        {% endfor %}
+        <hr>
+    {% endblock %}
+{% endblock %}
