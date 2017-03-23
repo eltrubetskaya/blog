@@ -36,7 +36,6 @@ class MenuBuilder
         $nodes =  $category->getRootNodes();
 
         $menu = $this->factory->createItem('root');
-        $menu->addChild('Home', ['route' => 'veta_homework_homepage']);
 
         foreach ($nodes as $node) {
             $nodesChildren =  $category->getChildren($node, false);

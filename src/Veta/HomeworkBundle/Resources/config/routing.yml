@@ -21,7 +21,6 @@ veta_homework_post_index:
     options:
         expose: true
 
-
 veta_homework_post_search:
     path:     /{_locale}/post/search
     defaults: { _controller: VetaHomeworkBundle:Post:search }

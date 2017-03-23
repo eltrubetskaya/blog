@@ -64,7 +64,7 @@ services:
         class: Veta\HomeworkBundle\EventListener\LocaleListener
         arguments: ['%kernel.default_locale%']
         tags:
-            - { name: kernel.event_subscriber }
+            - { name: kernel.event_subscriber, priority: 100 }
 
     veta_homework.event_listener.exception_listener:
         class: Veta\HomeworkBundle\EventListener\ExceptionListener
@@ -75,7 +75,7 @@ services:
         class: Veta\HomeworkBundle\EventListener\RequestListener
         arguments: ["@twig", "@form.factory", "@router", "@doctrine.orm.entity_manager", "@service_container"]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_subscriber, event: kernel.request, method: onKernelRequest, priority: 50 }
 
     veta_homework.sitemap.post_subscriber:
         class:     Veta\HomeworkBundle\EventListener\SitemapSubscriber

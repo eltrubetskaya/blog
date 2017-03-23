@@ -56,7 +56,7 @@ class PostController extends FOSRestController
             $post->setLocale($request->get('_locale'));
             $em->refresh($post);
 
-            $category = $em->getRepository('VetaHomeworkBundle:Category')->find($post->getCategory());
+            $category = $post->getCategory();
             $category->setLocale($request->get('_locale'));
             $em->refresh($category);
 
@@ -115,7 +115,7 @@ class PostController extends FOSRestController
         $post->setLocale($request->get('_locale'));
         $em->refresh($post);
 
-        $category = $em->getRepository('VetaHomeworkBundle:Category')->find($post->getCategory());
+        $category = $post->getCategory();
         $category->setLocale($request->get('_locale'));
         $em->refresh($category);
 

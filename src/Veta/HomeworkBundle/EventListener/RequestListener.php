@@ -4,12 +4,14 @@ namespace Veta\HomeworkBundle\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Router;
 
-class RequestListener
+class RequestListener implements EventSubscriberInterface
 {
     /**
      * @var \Twig_Environment
@@ -70,5 +72,16 @@ class RequestListener
         $tagsSidebarModule = $this->manager->getRepository('VetaHomeworkBundle:Tag')->findLimited($this->container->getParameter('veta_homework.sidebar.tags_limit'));
         $this->twig->addGlobal('postsSidebarModule', $postsSidebarModule);
         $this->twig->addGlobal('tagsSidebarModule', $tagsSidebarModule);
+    }
+
+    /**
+     * @return array The event names to listen to
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            // must be registered after the default Locale listener
+            KernelEvents::REQUEST => [['onKernelRequest', -15]],
+        ];
     }
 }

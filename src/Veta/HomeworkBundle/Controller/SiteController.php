@@ -33,7 +33,8 @@ class SiteController extends Controller
     {
         $locale = $request->getLocale();
         return $this->redirectToRoute('veta_homework_homepage', [
-           '_locale' => $locale
+           '_locale' => $locale,
+
         ]);
     }
 }

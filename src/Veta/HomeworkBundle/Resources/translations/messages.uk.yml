@@ -1,6 +1,6 @@
 blog_template_built_for: Шаблон Блог створений для
 back_to_top: Догори
-btn_search: Відправити
+btn_search: Пошук
 btn_add: Додати
 search: Пошук
 blog: Блог
@@ -21,3 +21,6 @@ comments: Коментарі
 new_comment: Новий коментар
 log_in: Вхід
 sign_up: Регістрація
+Home: Головна
+Post: Список Постів
+Category: Список Категорій
